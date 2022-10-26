@@ -8,7 +8,7 @@ const registerEndPoint = 'auth/register';
 
 
 // End Points for Main Screen
-const moviesFindEndPoint = "movies";
+const moviesFindEndPoint = 'movies';
 const moviesUpComingEndPoint = 'movies/upcoming';
 
 

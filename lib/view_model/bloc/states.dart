@@ -22,11 +22,14 @@ class LoginErrorState extends CubitState{
 }
 
 
+class NavigationSuccessState extends CubitState{}
+
+
 class MoviesFindLoadingState extends CubitState {}
 class MoviesFindSuccessState extends CubitState {
-  final MoviesFindModel moviesFindModel ;
+  /*final MoviesFindModel moviesFindModel ;
 
-  MoviesFindSuccessState(this.moviesFindModel);
+  MoviesFindSuccessState(this.moviesFindModel);*/
 }
 class MovieFindErrorState extends CubitState {
   final Response? error;
@@ -35,11 +38,7 @@ class MovieFindErrorState extends CubitState {
 
 
 class MoviesUpComingLoadingState extends CubitState {}
-class MoviesUpComingSuccessState extends CubitState {
-  final MoviesUpComingModel moviesUpComingModel ;
-
-  MoviesUpComingSuccessState(this.moviesUpComingModel);
-}
+class MoviesUpComingSuccessState extends CubitState {}
 class MoviesUpComingErrorState extends CubitState {
   final Response? error;
   MoviesUpComingErrorState(this.error);
@@ -50,7 +49,6 @@ class MoviesUpComingErrorState extends CubitState {
 
 
 
-class NavigationSuccessState extends CubitState{}
 
 class GetSectionsSuccess extends CubitState{}
 class GetLecturesSuccess extends CubitState{}

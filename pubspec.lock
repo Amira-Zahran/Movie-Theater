@@ -15,6 +15,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.9.0"
+  auto_size_text:
+    dependency: transitive
+    description:
+      name: auto_size_text
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "3.0.0"
   awesome_dialog:
     dependency: "direct main"
     description:
@@ -254,6 +261,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.0"
+  onboarding_screen:
+    dependency: "direct main"
+    description:
+      name: onboarding_screen
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.0.3"
   page_transition:
     dependency: transitive
     description:
@@ -525,13 +539,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.4.12"
-  top_snackbar_flutter:
-    dependency: "direct main"
-    description:
-      name: top_snackbar_flutter
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "2.1.1"
   typed_data:
     dependency: transitive
     description:
@@ -552,7 +559,7 @@ packages:
       name: url_launcher_android
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "6.0.19"
+    version: "6.0.20"
   url_launcher_ios:
     dependency: transitive
     description:

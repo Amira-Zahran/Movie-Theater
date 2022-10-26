@@ -34,15 +34,15 @@ class MoviesFindModel {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = id;
-    data['name'] = name;
-    data['imageUrl'] = imageUrl;
-    data['rating'] = rating;
-    data['duration'] = duration;
-    data['overview'] = overview;
-    data['genres'] = genres;
-    data['adult'] = adult;
-    data['deleted'] = deleted;
+    data['id'] = this.id;
+    data['name'] = this.name;
+    data['imageUrl'] = this.imageUrl;
+    data['rating'] = this.rating;
+    data['duration'] = this.duration;
+    data['overview'] = this.overview;
+    data['genres'] = this.genres;
+    data['adult'] = this.adult;
+    data['deleted'] = this.deleted;
     return data;
   }
 }

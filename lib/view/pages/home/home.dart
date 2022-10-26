@@ -1,11 +1,15 @@
 import 'dart:math';
 
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:odc_interview/model/home/movies_find_model.dart';
 import 'package:odc_interview/view/components/core/style.dart';
+import 'package:odc_interview/view_model/bloc/home/home_cubit.dart';
+import 'package:odc_interview/view_model/bloc/states.dart';
+import 'package:onboarding_screen/onboarding_screen.dart';
 
-import '../../../model/models.dart';
-import '../nav_bar.dart';
-import 'details.dart';
+
 
 class Home extends StatefulWidget {
   Home({Key? key}) : super(key: key);
@@ -17,14 +21,20 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   late PageController _pageController;
 
-  int _currentPage = 0;
+  final int _currentPage = 1;
+
+
+  fetch(){
+    HomeCubit.get(context).getMoviesFind();
+    HomeCubit.get(context).getMoviesUpComing();
+  }
+
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
-    _pageController =
-        PageController(initialPage: _currentPage, viewportFraction: 0.8);
+    fetch();
+    _pageController = PageController(initialPage: 0, viewportFraction: 1);
   }
 
   @override
@@ -33,131 +43,212 @@ class _HomeState extends State<Home> {
     _pageController.dispose();
   }
 
+  final GlobalKey<ScaffoldState> drawerKey = GlobalKey<ScaffoldState>();
+
+  PageController controller = PageController();
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        //backgroundColor: secondary,
-        //drawer: drawer(),
-        appBar: AppBar(
-          leading: IconButton(onPressed: (){}, icon: Image.asset('assets/img/drawer.png')),
-          title: Image.asset('assets/img/logo.png', width: 70, height: 70,),
-          centerTitle: true,
-          backgroundColor: Colors.black,
-          elevation: 0.0,),
-        body: Column(
-          children: [
-            const SizedBox(height: 35,),
-            Container(
-              alignment: Alignment.center,
-              decoration: BoxDecoration(
-                image: DecorationImage(
-                  image: const AssetImage('assets/img/logo.png'),
-                  fit: BoxFit.cover,
-                  colorFilter: ColorFilter.mode(
-                      Colors.black.withOpacity(0.6), BlendMode.darken),),),
-              child: Column(
-                children: [
-                  Center(child: Text('Now Playing', style: TextStyle(
-                      fontSize: 35,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white),)),
-                  SizedBox(height: 5,),
-                  Center(child: Text('Book your ticket now', style: TextStyle(
-                      fontSize: 15,
-                      fontWeight: FontWeight.bold,
-                      color: primary),)),
-                  AspectRatio(
-                    aspectRatio: 0.85,
-                    child: PageView.builder(
-                        itemCount: dataList.length,
+    return BlocConsumer<HomeCubit, CubitState>(
+        listener: (BuildContext context, state) {  },
+        builder: (BuildContext context, Object? state) {
+          HomeCubit myHome = HomeCubit.get(context);
+
+          final List<Widget> imageSliders = myHome.moviesUpComing.map((item) => Container(
+            margin: const EdgeInsets.all(5.0),
+            child: ClipRRect(
+                borderRadius: const BorderRadius.all(Radius.circular(5.0)),
+                child: PageView.builder(
+                  itemBuilder: (BuildContext context, int index) {
+                    return Stack(
+                      children: <Widget>[
+                        Image.network(myHome.moviesUpComing[index].imageUrl.toString(), fit: BoxFit.cover, width: 1000.0),
+                        Positioned(
+                          bottom: 0.0,
+                          left: 0.0,
+                          right: 0.0,
+                          child: Container(
+                            decoration: const BoxDecoration(
+                              gradient: LinearGradient(
+                                colors: [
+                                  Color.fromARGB(200, 0, 0, 0),
+                                  Color.fromARGB(0, 0, 0, 0)
+                                ],
+                                begin: Alignment.bottomCenter,
+                                end: Alignment.topCenter,
+                              ),
+                            ),
+                            padding: const EdgeInsets.symmetric(
+                                vertical: 10.0, horizontal: 20.0),
+                            child: Text(myHome.moviesUpComing[index].name.toString(),
+                              style: const TextStyle(
+                                color: Colors.white,
+                                fontSize: 20.0,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    );
+                  },
+                )),
+          ))
+              .toList();
+
+          return  Scaffold(
+            backgroundColor: secondary,
+              appBar: AppBar(
+                leading: IconButton(onPressed: (){ drawerKey.currentState!.openDrawer(); }, icon: Image.asset('assets/img/drawer.png', width: 50, height: 50,)),
+                title: Image.asset('assets/img/logo.png', width: 70, height: 70,),
+                centerTitle: true,
+                backgroundColor: secondary,
+                elevation: 0.0,),
+              body: SingleChildScrollView(
+                child: Column(
+                    children: [
+                      const SizedBox(height: 20,),
+                      SizedBox(
+                  width: double.infinity,
+                  height: MediaQuery.of(context).size.height,
+                  child: PageView.builder(
                         physics: const ClampingScrollPhysics(),
                         controller: _pageController,
-                        itemBuilder: (context, index) {
-                          return carouselView(index);
-                        }),
+                        itemCount: myHome.moviesFind.length,
+                        itemBuilder: (BuildContext context, int index) {
+                          return Container(
+                            padding: const EdgeInsets.only(top: 30),
+                            //width: double.infinity,
+                            height: MediaQuery.of(context).size.height,
+                            //alignment: Alignment.center,
+                            decoration: BoxDecoration(
+                              image: DecorationImage(
+                                image: NetworkImage(myHome.moviesFind[index].imageUrl.toString()),
+                                fit: BoxFit.cover,
+                                colorFilter: ColorFilter.mode(
+                                    Colors.black.withOpacity(0.8), BlendMode.darken),),),
+                            child: Column(
+                              children: [
+                                const Center(child: Text('Now Playing', style: TextStyle(
+                                    fontSize: 35,
+                                    fontWeight: FontWeight.bold,
+                                    fontFamily: 'Salsa',
+                                    color: Colors.white),)),
+                                const SizedBox(height: 5,),
+                                const Center(child: Text('Book your ticket now', style: TextStyle(
+                                    fontSize: 13,
+                                    fontWeight: FontWeight.bold,
+                                    fontFamily: 'Salsa',
+                                    color: primary),)),
+                                SizedBox(height: MediaQuery.of(context).size.height*.09,),
+                                Container(
+                                      height: MediaQuery.of(context).size.height*.4,
+                                      width: MediaQuery.of(context).size.width*.4,
+                                      decoration: BoxDecoration(borderRadius: BorderRadius.circular(20),),
+                                      child: AspectRatio(
+                                       aspectRatio: 1/3,
+                                       child: carouselView(index, myHome.moviesFind))
+                                  ),
+                                //Image.network(myHome.moviesFindModel!.imageUrl.toString()),
+                                /*SizedBox(
+                                       height: 500,
+                                       width: 500,
+                                       child: ListView.separated(
+                                         physics: const BouncingScrollPhysics(),
+                                         scrollDirection: Axis.horizontal,
+                                         itemBuilder: (context, index) => Column(
+                                           children: [
+                                             const Text('dkkkkkkkkkkkkkkkkkkkkkkkkk'),
+                                             Image.network(myHome.moviesFind[index].imageUrl.toString()),
+                                             Text(myHome.moviesFind[index].name.toString()),
+                                           ],
+                                         ),
+                                         separatorBuilder: (context, index) => const SizedBox(
+                                           width: 20,
+                                         ),
+                                         itemCount: myHome.moviesFind.length,
+                                       ),
+                                   ),*/
+                                const Text('data'),
+                              ],
+                            ),
+                          );
+                          },
                   )
-                ],
-              ),
-            ),
-          ],
-        )
+                  ),
+                      SizedBox(
+                        height: 300,
+                        width: 300,
+                        child: PageView.builder(
+                          itemBuilder: (BuildContext context, int index) {
+                            return CarouselSlider(
+                              options: CarouselOptions(
+
+                                aspectRatio: 2.0,
+                                enlargeCenterPage: true,
+                                enableInfiniteScroll: false,
+                                initialPage: 2,
+                                autoPlay: false,
+                              ),
+                              items: imageSliders,
+                            );
+                          },
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                        /* CarouselSlider(
+                      items: imageSliders,
+                      carouselController: buttonCarouselController,
+                      options: CarouselOptions(
+                        autoPlay: false,
+                        enlargeCenterPage: true,
+                        viewportFraction: 0.9,
+                        aspectRatio: 2.0,
+                        initialPage: 2,
+                      ),
+                    ),*/
+              );
+        },
     );
   }
 
-  Widget carouselView(int index) {
+  Widget carouselView(int index, List<MoviesFindModel>? moviesFind) {
     return AnimatedBuilder(
       animation: _pageController,
       builder: (context, child) {
         double value = 0.0;
         if (_pageController.position.haveDimensions) {
           value = index.toDouble() - (_pageController.page ?? 0);
-          value = (value * 0.038).clamp(-1, 1);
-          print("value $value index $index");
+          value = (value * 0.05).clamp(-1, 1);
         }
         return Transform.rotate(
           angle: pi * value,
-          child: carouselCard(dataList[index]),
+          child: carouselCard(index, moviesFind),
         );
       },
     );
   }
 
-  Widget carouselCard(DataModel data) {
+  Widget carouselCard(int index , List<MoviesFindModel>? moviesFind) {
     return Column(
-      children: <Widget>[
-        Expanded(
-          child: Padding(
-            padding: const EdgeInsets.all(20.0),
-            child: Hero(
-              tag: data.imageName,
-              child: GestureDetector(
-                onTap: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => DetailsScreen(data: data)));
-                },
-                child: Container(
-                  decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(30),
-                      image: DecorationImage(
-                          image: AssetImage(
-                            data.imageName,
-                          ),
-                          fit: BoxFit.fill),
-                      boxShadow: const [
-                        BoxShadow(
-                            offset: Offset(0, 4),
-                            blurRadius: 4,
-                            color: Colors.black26)
-                      ]),
-                ),
+          children: [
+            Image.network(moviesFind![index].imageUrl.toString(),),
+           /* SizedBox(
+              width: 200,
+              height: 200,
+              child: OnBoardingScreen(
+                mySlides: moviesFind,
+                controller: _pageController,
+                slideIndex: 0,
+                statusBarColor: Colors.red,
+                startGradientColor: Colors.red,
+                endGradientColor: Colors.blue,
+
               ),
-            ),
-          ),
-        ),
-        Padding(
-          padding: const EdgeInsets.only(top: 20),
-          child: Text(
-            data.title,
-            style: const TextStyle(
-                color: Colors.black45,
-                fontSize: 25,
-                fontWeight: FontWeight.bold),
-          ),
-        ),
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Text(
-            "\$${data.price}",
-            style: const TextStyle(
-                color: Colors.black87,
-                fontSize: 16,
-                fontWeight: FontWeight.bold),
-          ),
-        )
-      ],
+            )*/
+          ],
     );
   }
 }
