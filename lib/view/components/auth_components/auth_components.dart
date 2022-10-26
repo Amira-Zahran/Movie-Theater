@@ -7,9 +7,10 @@ Widget defaultField({
   required TextEditingController controller,
   required TextInputType type,
   required String text,
+  required double radius
 }) =>
     TextFormField(
-      style: const TextStyle(color: grey),
+      style: const TextStyle(color: grey, fontFamily: 'Salsa'),
       controller: controller,
       keyboardType: type,
       validator: (String? value){
@@ -21,10 +22,10 @@ Widget defaultField({
       decoration: InputDecoration(
         fillColor: third,
         filled: true,
-        enabledBorder: OutlineInputBorder( borderRadius: BorderRadius.circular(10)),
-        focusedBorder: OutlineInputBorder(borderSide: const BorderSide(width: 1, color: primary), borderRadius: BorderRadius.circular(10)),
+        enabledBorder: OutlineInputBorder(borderSide: const BorderSide(color: third), borderRadius: BorderRadius.circular(radius)),
+        focusedBorder: OutlineInputBorder(borderSide: const BorderSide(width: 1, color: primary), borderRadius: BorderRadius.circular(radius)),
         hintText: text,
-        hintStyle: const TextStyle(color: grey)
+        hintStyle: const TextStyle(color: grey, fontFamily: 'Salsa')
       ),
     );
 

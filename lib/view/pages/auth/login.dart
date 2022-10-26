@@ -51,9 +51,9 @@ class Login extends StatelessWidget {
                           const SizedBox(height: 35,),
                           const Center(child: Text('Login', style: TextStyle(fontSize: 35, color: Colors.white, fontFamily: 'Salsa'),)),
                           const SizedBox(height: 35,),
-                          defaultField(type: TextInputType.emailAddress, text: 'E-Mail', controller: myLogin.emailController,),
+                          defaultField(type: TextInputType.emailAddress, text: 'E-Mail', controller: myLogin.emailController, radius: 10),
                           const SizedBox(height: 35,),
-                          defaultField(controller: myLogin.passwordController, type: TextInputType.visiblePassword, text: 'Password'),
+                          defaultField(controller: myLogin.passwordController, type: TextInputType.visiblePassword, text: 'Password', radius: 10),
                           textBtn(text: 'Forget password?', onPressed: (){}, fontSize: 12, height: 1),
                           const SizedBox(height: 50,),
                           Center(

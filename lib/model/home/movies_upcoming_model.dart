@@ -1,3 +1,7 @@
+import 'dart:convert';
+
+List<MoviesUpComingModel> carouselFromJson(String str) => List<MoviesUpComingModel>.from(json.decode(str).map((x) => MoviesUpComingModel.fromJson(x)));
+
 class MoviesUpComingModel {
   String? name;
   String? imageUrl;

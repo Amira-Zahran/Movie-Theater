@@ -1,18 +1,20 @@
 import 'dart:math';
 
-import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:odc_interview/model/home/movies_find_model.dart';
 import 'package:odc_interview/view/components/core/style.dart';
 import 'package:odc_interview/view_model/bloc/home/home_cubit.dart';
 import 'package:odc_interview/view_model/bloc/states.dart';
-import 'package:onboarding_screen/onboarding_screen.dart';
+
+import '../../components/core/components.dart';
+import 'details.dart';
 
 
 
 class Home extends StatefulWidget {
-  Home({Key? key}) : super(key: key);
+  const Home({Key? key}) : super(key: key);
 
   @override
   State<Home> createState() => _HomeState();
@@ -21,7 +23,7 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   late PageController _pageController;
 
-  final int _currentPage = 1;
+  //int _currentPage = 1;
 
 
   fetch(){
@@ -43,7 +45,8 @@ class _HomeState extends State<Home> {
     _pageController.dispose();
   }
 
-  final GlobalKey<ScaffoldState> drawerKey = GlobalKey<ScaffoldState>();
+
+  //final CarouselController _controller = CarouselController();
 
   PageController controller = PageController();
 
@@ -54,7 +57,7 @@ class _HomeState extends State<Home> {
         builder: (BuildContext context, Object? state) {
           HomeCubit myHome = HomeCubit.get(context);
 
-          final List<Widget> imageSliders = myHome.moviesUpComing.map((item) => Container(
+          /*final List<Widget> imageSliders = myHome.moviesUpComing.map((item) => Container(
             margin: const EdgeInsets.all(5.0),
             child: ClipRRect(
                 borderRadius: const BorderRadius.all(Radius.circular(5.0)),
@@ -94,30 +97,24 @@ class _HomeState extends State<Home> {
                   },
                 )),
           ))
-              .toList();
+              .toList();*/
 
           return  Scaffold(
             backgroundColor: secondary,
-              appBar: AppBar(
-                leading: IconButton(onPressed: (){ drawerKey.currentState!.openDrawer(); }, icon: Image.asset('assets/img/drawer.png', width: 50, height: 50,)),
-                title: Image.asset('assets/img/logo.png', width: 70, height: 70,),
-                centerTitle: true,
-                backgroundColor: secondary,
-                elevation: 0.0,),
               body: SingleChildScrollView(
                 child: Column(
                     children: [
                       const SizedBox(height: 20,),
                       SizedBox(
-                  width: double.infinity,
-                  height: MediaQuery.of(context).size.height,
-                  child: PageView.builder(
+                       width: double.infinity,
+                       height: MediaQuery.of(context).size.height,
+                       child: PageView.builder(
                         physics: const ClampingScrollPhysics(),
                         controller: _pageController,
                         itemCount: myHome.moviesFind.length,
                         itemBuilder: (BuildContext context, int index) {
                           return Container(
-                            padding: const EdgeInsets.only(top: 30),
+                            padding: const EdgeInsets.only(top: 30, left: 20),
                             //width: double.infinity,
                             height: MediaQuery.of(context).size.height,
                             //alignment: Alignment.center,
@@ -128,6 +125,7 @@ class _HomeState extends State<Home> {
                                 colorFilter: ColorFilter.mode(
                                     Colors.black.withOpacity(0.8), BlendMode.darken),),),
                             child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 const Center(child: Text('Now Playing', style: TextStyle(
                                     fontSize: 35,
@@ -141,64 +139,60 @@ class _HomeState extends State<Home> {
                                     fontFamily: 'Salsa',
                                     color: primary),)),
                                 SizedBox(height: MediaQuery.of(context).size.height*.09,),
-                                Container(
-                                      height: MediaQuery.of(context).size.height*.4,
-                                      width: MediaQuery.of(context).size.width*.4,
-                                      decoration: BoxDecoration(borderRadius: BorderRadius.circular(20),),
-                                      child: AspectRatio(
-                                       aspectRatio: 1/3,
-                                       child: carouselView(index, myHome.moviesFind))
+                                InkWell(
+                                  onTap: (){
+                                    navigateTo(context, Details(moviesFindModel: myHome.moviesFind, index: index,));
+                                  },
+                                  child: Center(
+                                  child: Container(
+                                          height: MediaQuery.of(context).size.height*.3,
+                                          width: MediaQuery.of(context).size.width*.4,
+                                          decoration: BoxDecoration(borderRadius: BorderRadius.circular(20),),
+                                          child: AspectRatio(
+                                           aspectRatio: 1,
+                                           child: carouselView(index, myHome.moviesFind))
+                                      ),
                                   ),
+                                ),
                                 //Image.network(myHome.moviesFindModel!.imageUrl.toString()),
-                                /*SizedBox(
-                                       height: 500,
-                                       width: 500,
+                                const Text('Coming Soon', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold,fontSize: 20),),
+                                SizedBox(height: MediaQuery.of(context).size.height*.03,),
+                                SizedBox(
+                                       height: MediaQuery.of(context).size.height*.4,
+                                       width: MediaQuery.of(context).size.width,
                                        child: ListView.separated(
                                          physics: const BouncingScrollPhysics(),
                                          scrollDirection: Axis.horizontal,
-                                         itemBuilder: (context, index) => Column(
-                                           children: [
-                                             const Text('dkkkkkkkkkkkkkkkkkkkkkkkkk'),
-                                             Image.network(myHome.moviesFind[index].imageUrl.toString()),
-                                             Text(myHome.moviesFind[index].name.toString()),
-                                           ],
-                                         ),
+                                         itemBuilder: (context, index) => Image.network(myHome.moviesUpComing[index].imageUrl.toString()),
                                          separatorBuilder: (context, index) => const SizedBox(
                                            width: 20,
                                          ),
-                                         itemCount: myHome.moviesFind.length,
+                                         itemCount: myHome.moviesUpComing.length,
                                        ),
-                                   ),*/
-                                const Text('data'),
+                                   ),
                               ],
                             ),
                           );
                           },
                   )
                   ),
+                      /*sliderBuilder(context),
                       SizedBox(
-                        height: 300,
-                        width: 300,
+                        height: 500,
+                        width: MediaQuery.of(context).size.width*.9,
                         child: PageView.builder(
                           itemBuilder: (BuildContext context, int index) {
-                            return CarouselSlider(
-                              options: CarouselOptions(
-
-                                aspectRatio: 2.0,
-                                enlargeCenterPage: true,
-                                enableInfiniteScroll: false,
-                                initialPage: 2,
-                                autoPlay: false,
-                              ),
-                              items: imageSliders,
+                            return AspectRatio(
+                                aspectRatio: 1.0,
+                              child: carouselUpComing(index, myHome.moviesUpComing),
                             );
                           },
                         ),
-                      ),
+                      ),*/
                     ],
                   ),
                 ),
-                        /* CarouselSlider(
+            /* CarouselSlider(
                       items: imageSliders,
                       carouselController: buttonCarouselController,
                       options: CarouselOptions(
@@ -209,10 +203,89 @@ class _HomeState extends State<Home> {
                         initialPage: 2,
                       ),
                     ),*/
+
+
+              /*ListView.builder(itemBuilder: (ctx, index) {
+                if (index == 2) {
+                  return  Builder(
+                    builder: (context) {
+                      double height = MediaQuery.of(context).size.height;
+                      return Column(
+                        children: [
+                          CarouselSlider(
+                            options: CarouselOptions(
+                              height: height,
+                              viewportFraction: 1.0,
+                              enlargeCenterPage: false,
+                              // autoPlay: false,
+                            ),
+                            items: imageSliders.map((item) => Center(
+                                child: Image.network(
+                                  myHome.moviesFind[index].imageUrl.toString(),
+                                  fit: BoxFit.cover,
+                                  height: height,
+                                )))
+                                .toList(),
+                          ),
+                          Column(children: [
+                            Expanded(
+                              child: CarouselSlider(
+                                items: imageSliders,
+                                carouselController: _controller,
+                                options: CarouselOptions(
+                                    autoPlay: true,
+                                    enlargeCenterPage: true,
+                                    aspectRatio: 2.0,
+                                    onPageChanged: (index, reason) {
+                                      setState(() {
+                                        _currentPage = index;
+                                      });
+                                    }),
+                              ),
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: imageSliders.asMap().entries.map((entry) {
+                                return GestureDetector(
+                                  onTap: () => _controller.animateToPage(entry.key),
+                                  child: Container(
+                                    width: 12.0,
+                                    height: 12.0,
+                                    margin: EdgeInsets.symmetric(vertical: 8.0, horizontal: 4.0),
+                                    decoration: BoxDecoration(
+                                        shape: BoxShape.circle,
+                                        color: (Theme.of(context).brightness == Brightness.dark
+                                            ? Colors.white
+                                            : Colors.black)
+                                            .withOpacity(_currentPage == entry.key ? 0.9 : 0.4)),
+                                  ),
+                                );
+                              }).toList(),
+                            ),
+                          ]),
+                        ],
+                      );
+                    },
+                  );
+                } else {
+                  return Container(
+                      child: CarouselSlider(
+                        options: CarouselOptions(
+                          aspectRatio: 2.0,
+                          enlargeCenterPage: true,
+                          pageViewKey: PageStorageKey<String>('carousel_slider'),
+                        ),
+                        items: imageSliders,
+                      ));
+                }
+              }*/
               );
         },
     );
   }
+
+
+
 
   Widget carouselView(int index, List<MoviesFindModel>? moviesFind) {
     return AnimatedBuilder(
@@ -230,12 +303,11 @@ class _HomeState extends State<Home> {
       },
     );
   }
-
   Widget carouselCard(int index , List<MoviesFindModel>? moviesFind) {
     return Column(
-          children: [
-            Image.network(moviesFind![index].imageUrl.toString(),),
-           /* SizedBox(
+      children: [
+        Image.network(moviesFind![index].imageUrl.toString(),),
+        /* SizedBox(
               width: 200,
               height: 200,
               child: OnBoardingScreen(
@@ -248,7 +320,83 @@ class _HomeState extends State<Home> {
 
               ),
             )*/
-          ],
+      ],
     );
   }
+
+
+  /*
+  Widget carouselUpComing(int index, List<MoviesUpComingModel>? moviesUpComing) {
+    return AnimatedBuilder(
+      animation: _pageController,
+      builder: (context, child) {
+        double value = 0.0;
+        if (_pageController.position.haveDimensions) {
+          value = index.toDouble() - (_pageController.page ?? 0);
+          value = (value * 0).clamp(-1, 1);
+        }
+        return Transform.rotate(
+          angle: pi * value,
+          child: carouselCardUpComing(index, moviesUpComing),
+        );
+      },
+    );
+  }
+
+  Widget carouselCardUpComing(int index , List<MoviesUpComingModel>? moviesUpComing) {
+    return Column(
+      children: [
+        Image.network(moviesUpComing![index].imageUrl.toString(),),
+        *//* SizedBox(
+              width: 200,
+              height: 200,
+              child: OnBoardingScreen(
+                mySlides: moviesFind,
+                controller: _pageController,
+                slideIndex: 0,
+                statusBarColor: Colors.red,
+                startGradientColor: Colors.red,
+                endGradientColor: Colors.blue,
+
+              ),
+            )*//*
+      ],
+    );
+  }
+
+  Widget sliderBuilder(context){
+    return FutureBuilder(
+        builder: (BuildContext context, AsyncSnapshot<List<MoviesUpComingModel>> sliderModel){
+      if(sliderModel.hasData){
+        return imageCarousel(sliderModel.data);
+      }
+      return const Center(child: CircularProgressIndicator(color: primary,),);
+    },
+    );
+  }
+
+  Widget imageCarousel(List<MoviesUpComingModel>? moviesUpComing){
+    return CarouselSlider(items: moviesUpComing!.map((model) {
+      return Container(
+        margin: const EdgeInsets.all(6),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(20),
+          image: DecorationImage(image: NetworkImage(model.imageUrl.toString()),
+          fit: BoxFit.cover
+          )
+        ),
+      );
+    }).toList(),
+        options: CarouselOptions(
+          enlargeCenterPage: true,
+          autoPlay: false,
+          aspectRatio: 16/9,
+          autoPlayCurve: Curves.decelerate,
+          enableInfiniteScroll: true,
+          viewportFraction: .9
+        )
+    );
+  }
+*/
+
 }

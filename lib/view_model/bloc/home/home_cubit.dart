@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:dio/dio.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:odc_interview/model/home/movies_find_model.dart';
 import 'package:odc_interview/model/home/movies_upcoming_model.dart';
@@ -18,6 +19,8 @@ class HomeCubit extends Cubit<CubitState>{
 
   static HomeCubit get(context) => BlocProvider.of(context);
 
+  final GlobalKey<ScaffoldState> drawerKey = GlobalKey<ScaffoldState>();
+
   bool isLoading = true;
 
 
@@ -32,7 +35,7 @@ class HomeCubit extends Cubit<CubitState>{
   final screens = [
     Home(),
     const Tickets(),
-    const SearchScreen()
+    SearchScreen()
   ];
 
 
@@ -122,4 +125,5 @@ class HomeCubit extends Cubit<CubitState>{
       }
     });
   }
+
 }
