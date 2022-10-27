@@ -7,14 +7,17 @@ import '../../../view_model/bloc/home/home_cubit.dart';
 import '../../components/core/style.dart';
 
 
-class NavBottomBar extends StatelessWidget {
+class NavBottomBar extends StatefulWidget {
   const NavBottomBar({Key? key}) : super(key: key);
 
   @override
+  State<NavBottomBar> createState() => _NavBottomBarState();
+}
+
+class _NavBottomBarState extends State<NavBottomBar> {
+  @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (BuildContext context) { return HomeCubit(); },
-      child: BlocConsumer<HomeCubit, CubitState>(
+    return BlocConsumer<HomeCubit, CubitState>(
         listener: (BuildContext context, state) {  },
         builder: (BuildContext context, Object? state) {
           HomeCubit myCubit = HomeCubit.get(context);
@@ -30,7 +33,7 @@ class NavBottomBar extends StatelessWidget {
               key: myCubit.drawerKey,
               drawer: drawer(context),
               bottomNavigationBar:  BottomNavigationBar(
-                type: BottomNavigationBarType.fixed,
+                //type: BottomNavigationBarType.fixed,
                 /*selectedIconTheme: IconThemeData(color: kPrimaryMagentaColor),
                 selectedLabelStyle: TextStyle(fontWeight: FontWeight.w500),
                 selectedItemColor: Colors.black,
@@ -51,8 +54,10 @@ class NavBottomBar extends StatelessWidget {
                       backgroundColor: secondary,
                       unselectedItemColor: Colors.grey,
                       onTap: (index) {
-                        debugPrint(index.toString());
-                        myCubit.changeScreenIndex(index);
+                       // myCubit.changeScreenIndex(index);
+                        setState(() {
+                          myCubit.currentIndex = index;
+                        });
                       },
                       currentIndex: myCubit.currentIndex,
                     ),
@@ -60,7 +65,6 @@ class NavBottomBar extends StatelessWidget {
             ),
           );
         },
-      ),
     );
   }
 }

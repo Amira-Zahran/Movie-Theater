@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:odc_interview/view_model/bloc/auth/Login_cubit.dart';
 import 'view/pages/splash.dart';
+import 'view_model/bloc/home/home_cubit.dart';
 import 'view_model/database/local/SQLITE_DB/database.dart';
 import 'view_model/database/local/shared_prefrences/preference_utils.dart';
 import 'view_model/database/network/dio_helper.dart';
@@ -25,9 +28,19 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-        debugShowCheckedModeBanner: false,
-        home: SplashScreen()
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (BuildContext context) { return LoginCubit(); },
+        ),
+        BlocProvider(
+          create: (BuildContext context) { return HomeCubit(); },
+        ),
+      ],
+      child: const MaterialApp(
+          debugShowCheckedModeBanner: false,
+          home: SplashScreen()
+      ),
     );
   }
 }

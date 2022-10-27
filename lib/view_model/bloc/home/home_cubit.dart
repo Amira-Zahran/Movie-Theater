@@ -26,14 +26,17 @@ class HomeCubit extends Cubit<CubitState>{
 
   int currentIndex = 0;
 
-  void changeScreenIndex(int index)
+  changeScreenIndex(int index)
   {
+    emit(NavLoading());
     currentIndex = index;
+    emit(NavigationSuccessState());
+    emit(NavigationSuccessState());
     emit(NavigationSuccessState());
   }
 
   final screens = [
-    Home(),
+    const Home(),
     const Tickets(),
     SearchScreen()
   ];
@@ -68,36 +71,6 @@ class HomeCubit extends Cubit<CubitState>{
   }
 
 
-/*  List<MoviesUpComingModel> moviesUpComingModel = [];
-  Future getMoviesUpCome()async{
-    //if (await internetConnection!.isConnected) {
-    emit(MoviesUpComingLoadingState());
-    await DioHelper.getData(url: moviesUpComingEndPoint, token: accessToken).then((value) {
-      if (value.statusCode == 200) {
-        print(accessToken);
-        accessToken = PreferenceUtils.getString(SharedKeys.apiToken);
-        print('$accessToken _______________________');
-
-        for(var mov in value.data){
-          moviesUpComingModel.add(MoviesUpComingModel.fromJson(mov));
-        }
-        isLoading = false;
-        emit(MoviesUpComingSuccessState());
-        print('Movies UpComing');
-      }
-    }).catchError((error) {
-      print(error.toString());
-      if (error is DioError) {
-        print(error.toString());
-        emit(MoviesUpComingErrorState(error.response?.data['message'][0]));
-      }
-    });
-  }*/
-
-
-
-
-
   List<MoviesUpComingModel> moviesUpComing = [];
   Future getMoviesUpComing()async{
     //if (await internetConnection!.isConnected) {
@@ -107,6 +80,7 @@ class HomeCubit extends Cubit<CubitState>{
         print(accessToken);
         accessToken = PreferenceUtils.getString(SharedKeys.apiToken);
         print('$accessToken _______________________');
+        print('Movies up coming');
         //moviesFindModel = MoviesFindModel.fromJson(value.data);
         for(var mov in value.data) {
           moviesUpComing.add(MoviesUpComingModel.fromJson(mov));
@@ -125,5 +99,7 @@ class HomeCubit extends Cubit<CubitState>{
       }
     });
   }
+
+
 
 }

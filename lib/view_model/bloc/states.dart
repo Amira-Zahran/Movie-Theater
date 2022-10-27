@@ -21,8 +21,9 @@ class LoginErrorState extends CubitState{
   LoginErrorState(this.error);
 }
 
-
+class NavLoading extends CubitState{}
 class NavigationSuccessState extends CubitState{}
+
 
 
 class MoviesFindLoadingState extends CubitState {}

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
-
 import '../../../model/home/movies_find_model.dart';
 import '../../components/core/style.dart';
+
 
 class Details extends StatelessWidget {
   const Details({Key? key, required this.moviesFindModel, required this.index}) : super(key: key);
@@ -11,58 +11,60 @@ class Details extends StatelessWidget {
   final int index;
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: secondary,
-      body: Column(
-            //mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    return SafeArea(
+      child: Scaffold(
+        backgroundColor: secondary,
+        body: SingleChildScrollView(
+          child: Column(
+            //   mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Stack(
                 children: [
                   Container(
+                    padding: const EdgeInsets.only(bottom: 5),
                     width: MediaQuery.of(context).size.width,
                     height: MediaQuery.of(context).size.height*.3,
                     decoration: BoxDecoration(image: DecorationImage(image: NetworkImage(moviesFindModel[index].imageUrl.toString()), fit: BoxFit.cover)),
+                      child: Text(moviesFindModel[index].name.toString(), style: const TextStyle(color: Colors.white),)
                   ),
-                  Positioned(
-                    bottom: 10,
-                      child: Column(
-                        children: [
-                          Row(
-                            children: [
-                              Text('PG-${moviesFindModel[index].duration.toString()}'),
-                              Container(width: 5, height: 5, decoration: BoxDecoration(color: primary, borderRadius: BorderRadius.circular(5)),),
-                              const Text('2h 28m'),
-                              Container(width: 5, height: 5, decoration: BoxDecoration(color: primary, borderRadius: BorderRadius.circular(5)),),
-                              Text(moviesFindModel[index].genres.toString()),
-                            ],
-                          ),
-                          Row(
-                        children: [
-                          RatingBar.builder(
-                            initialRating: 5,
-                            minRating: 1,
-                            direction: Axis.horizontal,
-                            allowHalfRating: true,
-                            itemCount: moviesFindModel[index].rating!,
-                            itemPadding: const EdgeInsets.symmetric(horizontal: 4.0),
-                            itemBuilder: (context, _) => const Icon(
-                              Icons.star,
-                              color: primary,
-                            ),
-                            onRatingUpdate: (rating) {
-                              print(rating);
-                            },
-                          ),
-                          Text(moviesFindModel[index].rating.toString()),
-                        ],
-                      ),
-                    ],
-                  ))
+
                 ],
               ),
-              SizedBox(height: 500,),
+              Row(
+                children: [
+                  Text('PG-${moviesFindModel[index].duration.toString()}'),
+                  Container(width: 5, height: 5, decoration: BoxDecoration(color: primary, borderRadius: BorderRadius.circular(5)),),
+                  const Text('2h 28m'),
+                  Container(width: 5, height: 5, decoration: BoxDecoration(color: primary, borderRadius: BorderRadius.circular(5)),),
+                  Text(moviesFindModel[index].genres.toString()),
+                ],
+              ),
+              Row(
+                children: [
+                  RatingBar.builder(
+                    initialRating: 5,
+                    minRating: 1,
+                    direction: Axis.horizontal,
+                    allowHalfRating: true,
+                    itemCount: moviesFindModel[index].rating!,
+                    itemPadding: const EdgeInsets.symmetric(horizontal: 4.0),
+                    itemBuilder: (context, _) => const Icon(
+                      Icons.star,
+                      color: primary,
+                    ),
+                    onRatingUpdate: (rating) {
+                      print(rating);
+                      },
+                  ),
+                  Text(moviesFindModel[index].rating.toString()),
+                ],
+              ),
+              const SizedBox(height: 50,),
               const Text('Synopsis'),
-              SizedBox(width: MediaQuery.of(context).size.width*.4, child: Text(moviesFindModel[index].overview.toString(), maxLines: 7, style: const TextStyle(color: Colors.white))),
+              Center(child: SizedBox(
+                  height: MediaQuery.of(context).size.width,
+                  width: MediaQuery.of(context).size.width*.4, child: Text(moviesFindModel[index].overview.toString(), maxLines: 7, style: const TextStyle(color: Colors.white)))),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -70,7 +72,7 @@ class Details extends StatelessWidget {
                   InkWell(
                     onTap: (){
 
-                    },
+                      },
                     child: Row(
                       children: const [
                         Text('See All'),
@@ -80,31 +82,35 @@ class Details extends StatelessWidget {
                   ),
                 ],
               ),
-              ListView.builder(
-                  scrollDirection: Axis.horizontal,
-                  itemBuilder: (BuildContext context, index) {
-                    return Column(
-                      children: [
-                        Container(
-                          decoration: BoxDecoration(borderRadius: BorderRadius.circular(20)),
-                          child: Image.network(''),),
-                        const Text('Tom Holland', style: TextStyle(color: Colors.white))
-                      ],
-                    );
-                  }),
+              Expanded(
+                child: ListView.builder(
+                    scrollDirection: Axis.horizontal,
+                    itemBuilder: (BuildContext context, index) {
+                      return Column(
+                        children: [
+                          Container(
+                            decoration: BoxDecoration(borderRadius: BorderRadius.circular(20)),
+                            child: Image.network(''),),
+                          const Text('Tom Holland', style: TextStyle(color: Colors.white))
+                        ],
+                      );
+                    }),
+              ),
               const Text('Select Date', style: TextStyle(color: Colors.white),),
-              ListView.builder(
-                  scrollDirection: Axis.horizontal,
-                  itemBuilder: (BuildContext context, index) {
-                    return Column(
-                      children: [
-                        Container(
-                          decoration: BoxDecoration(borderRadius: BorderRadius.circular(20)),
-                          child: Image.network(''),),
-                        const Text('Tom Holland', style: TextStyle(color: Colors.white))
-                      ],
-                    );
-                  }),
+              Expanded(
+                child: ListView.builder(
+                    scrollDirection: Axis.horizontal,
+                    itemBuilder: (BuildContext context, index) {
+                      return Column(
+                        children: [
+                          Container(
+                            decoration: BoxDecoration(borderRadius: BorderRadius.circular(20)),
+                            child: Image.network(''),),
+                          const Text('Tom Holland', style: TextStyle(color: Colors.white))
+                        ],
+                      );
+                    }),
+              ),
               Expanded(
                 child: Align(
                   alignment: FractionalOffset.bottomCenter,
@@ -115,6 +121,8 @@ class Details extends StatelessWidget {
                 ),
               ),
             ],
+          ),
+        ),
       ),
     );
   }
