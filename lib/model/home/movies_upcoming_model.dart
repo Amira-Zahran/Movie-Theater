@@ -6,7 +6,7 @@ class MoviesUpComingModel {
   String? name;
   String? imageUrl;
   String? overview;
-  double? rating;
+  num? rating;
   String? trailer;
   int? duration;
   bool? adult;

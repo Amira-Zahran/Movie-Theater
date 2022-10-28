@@ -1,16 +1,15 @@
 import 'dart:math';
 
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:curved_carousel/curved_carousel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:odc_interview/model/home/movies_find_model.dart';
 import 'package:odc_interview/view/components/core/style.dart';
 import 'package:odc_interview/view_model/bloc/home/home_cubit.dart';
 import 'package:odc_interview/view_model/bloc/states.dart';
+import 'package:swipe_deck/swipe_deck.dart';
 
-import '../../components/core/components.dart';
-import 'details.dart';
 
 
 
@@ -23,9 +22,6 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   late PageController _pageController;
-
-  //int _currentPage = 1;
-
 
 
   @override
@@ -41,9 +37,11 @@ class _HomeState extends State<Home> {
   }
 
 
-  //final CarouselController _controller = CarouselController();
-
   PageController controller = PageController();
+
+  //List<Widget> IMAGES = ["assets/img/logo.png", "assets/img/home.png", "assets/img/mask.png", "assets/img/mask.png"];
+  final borderRadius = BorderRadius.circular(20.0);
+
 
   @override
   Widget build(BuildContext context) {
@@ -61,44 +59,28 @@ class _HomeState extends State<Home> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         const SizedBox(height: 20,),
-                        SizedBox(
-                         width: double.infinity,
-                         height: MediaQuery.of(context).size.height*.6,
-                         child: PageView.builder(
-                          physics: const ClampingScrollPhysics(),
-                          controller: _pageController,
-                          itemCount: myHome.moviesFind.length,
-                          itemBuilder: (BuildContext context, int index) {
-                            return Container(
-                              padding: const EdgeInsets.only(top: 30, left: 20),
-                              //width: double.infinity,
-                              height: MediaQuery.of(context).size.height,
-                              //alignment: Alignment.center,
-                              decoration: BoxDecoration(
-                                image: DecorationImage(
-                                  image: NetworkImage(myHome.moviesFind[index].imageUrl.toString()),
-                                  fit: BoxFit.cover,
-                                  colorFilter: ColorFilter.mode(
-                                      Colors.black.withOpacity(0.8), BlendMode.darken),),),
-                              child: Stack(
-                                children: [
-                                  InkWell(
-                                    onTap: (){
-                                      navigateTo(context, Details(moviesFindModel: myHome.moviesFind, index: index,));
-                                    },
-                                    child: Center(
-                                    child: Container(
-                                            height: MediaQuery.of(context).size.height*.3,
-                                            width: MediaQuery.of(context).size.width*.4,
-                                            decoration: BoxDecoration(borderRadius: BorderRadius.circular(20),),
-                                            child: AspectRatio(
-                                             aspectRatio: 1,
-                                             child: carouselView(index, myHome.moviesFind))
-                                        ),
-                                    ),
-                                  ),
-                                  //Image.network(myHome.moviesFindModel!.imageUrl.toString()),
-                                  Column(
+                        Stack(
+                          children: [
+                            SizedBox(
+                             width: double.infinity,
+                             height: MediaQuery.of(context).size.height*.6,
+                             child: PageView.builder(
+                              physics: const ClampingScrollPhysics(),
+                              controller: _pageController,
+                              itemCount: myHome.moviesFind.length,
+                              itemBuilder: (BuildContext context, int index) {
+                                return Container(
+                                  padding: const EdgeInsets.only(top: 30, left: 20),
+                                  //width: double.infinity,
+                                  height: MediaQuery.of(context).size.height,
+                                  //alignment: Alignment.center,
+                                  decoration: BoxDecoration(
+                                    image: DecorationImage(
+                                      image: NetworkImage(myHome.moviesFind[index].imageUrl.toString()),
+                                      fit: BoxFit.cover,
+                                      colorFilter: ColorFilter.mode(
+                                          Colors.black.withOpacity(0.8), BlendMode.darken),),),
+                                  child: Column(
                                     children: const [
                                       Center(child: Text('Now Playing', style: TextStyle(
                                           fontSize: 35,
@@ -114,35 +96,109 @@ class _HomeState extends State<Home> {
                                       //SizedBox(height: MediaQuery.of(context).size.height*.09,),
                                     ],
                                   ),
-                                ],
-                              ),
-                            );
-                            },
+                                );
+                                },
                     )
                     ),
+/*
+                            InkWell(
+                              onTap: (){
+                                navigateTo(context, Details(moviesFindModel: myHome.moviesFind, index: index,));
+                              },
+                              child: Center(
+                                child: Container(
+                                    height: MediaQuery.of(context).size.height*.3,
+                                    width: MediaQuery.of(context).size.width*.4,
+                                    decoration: BoxDecoration(borderRadius: BorderRadius.circular(20),),
+                                    child: AspectRatio(
+                                        aspectRatio: 1,
+                                        child: carouselView(index, myHome.moviesFind))
+                                ),
+                              ),
+                            ),
+*/
+/*
+                            Center(
+                              child: SizedBox(
+                                width: 300,
+                                height: 500,
+                                child: SwipeDeck(
+                                  startIndex: 2,
+                                  emptyIndicator: const Center(
+                                    child: Text("Nothing Here"),
+                                  ),
+                                  cardSpreadInDegrees: 600, // Change the Spread of Background Cards
+                                  widgets: IMAGES.map((index) => GestureDetector(
+                                    onTap: () {
+                                      //print(e);
+                                    },
+                                    child: ClipRRect(
+                                        borderRadius: borderRadius,
+                                        child: Image.asset(index,
+                                          fit: BoxFit.cover,
+                                        )),
+                                  )).toList(),
+                                ),
+                              ),
+                            ),
+*/
+                            SizedBox(
+                              height: 200,
+                              child: CurvedCarousel(
+                                viewPortSize: 60,
+                                reverseAutomaticMovement: false,
+                                scaleMiddleItem: false,
+                                automaticMoveDelay: 2,
+                                animationDuration: 5,
+                                disableInfiniteScrolling: false,
+                                tiltItemWithcurve: false,
+                                //horizontalPadding: 50,
+                                curveScale: -7,
+                                itemBuilder: (context, i){
+                                  return Container(
+                                      decoration: BoxDecoration(borderRadius: BorderRadius.circular(30),),
+                                      clipBehavior: Clip.antiAliasWithSaveLayer,
+                                      child: Image.network(myHome.moviesFind[i].imageUrl.toString(),));
+
+                                },
+                                itemCount: myHome.moviesFind.length,
+                              ),
+                            ),
+/*
+                            AnimatedPositioned(
+                              duration: Duration(milliseconds: 600),
+                              bottom: index - 2 == pageChangedIndex
+                                  ? 10.0
+                                  : index - 1 == pageChangedIndex
+                                  ? 30
+                                  : index + 1 == pageChangedIndex
+                                  ? 30.0
+                                  : index + 2 == pageChangedIndex
+                                  ? 10.0
+                                  : index == pageChangedIndex
+                                  ? 50.0
+                                  : 10.0,
+                              child: Container(
+                                color: Colors.red,
+                                // height: pageChangedIndex == index
+                                //     ? PAGER_HEIGHT * scale
+                                //     : 45.0,
+                                // width: pageChangedIndex == index
+                                //     ? PAGER_HEIGHT * scale
+                                //     : 45.0,
+                                child: Text('hey there'),
+                              ),
+                            ),
+*/
+
+                          ],
+                        ),
+
                         const Padding(
                           padding: EdgeInsets.all(8.0),
                           child: Text('Coming Soon', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold,fontSize: 20),),
                         ),
                         SizedBox(height: MediaQuery.of(context).size.height*.03,),
-/*
-                        SizedBox(
-                          height: MediaQuery.of(context).size.height*.3,
-                          width: MediaQuery.of(context).size.width,
-                          child: ListView.separated(
-                            physics: const BouncingScrollPhysics(),
-                            scrollDirection: Axis.horizontal,
-                            itemBuilder: (context, index) => Container(
-                                decoration: BoxDecoration(borderRadius: BorderRadius.circular(30),),
-                                clipBehavior: Clip.antiAliasWithSaveLayer,
-                                child: Image.network(myHome.moviesUpComing[index].imageUrl.toString())),
-                            separatorBuilder: (context, index) => const SizedBox(
-                              width: 20,
-                            ),
-                            itemCount: myHome.moviesUpComing.length,
-                          ),
-                        ),
-*/
                         CarouselSlider(
                           items: myHome.moviesUpComing.map((index){
                             return Builder(
@@ -175,19 +231,6 @@ class _HomeState extends State<Home> {
                             height: MediaQuery.of(context).size.height*.3,
                           ),
                         )
-                        /*sliderBuilder(context),
-                        SizedBox(
-                          height: 500,
-                          width: MediaQuery.of(context).size.width*.9,
-                          child: PageView.builder(
-                            itemBuilder: (BuildContext context, int index) {
-                              return AspectRatio(
-                                  aspectRatio: 1.0,
-                                child: carouselUpComing(index, myHome.moviesUpComing),
-                              );
-                            },
-                          ),
-                        ),*/
                       ],
                     ),
                   ),
@@ -220,6 +263,5 @@ class _HomeState extends State<Home> {
         clipBehavior: Clip.antiAliasWithSaveLayer,
         child: Image.network(moviesFind![index].imageUrl.toString(),));
   }
-
 
 }

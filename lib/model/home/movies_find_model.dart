@@ -7,7 +7,7 @@ class MoviesFindModel {
   int? id;
   String? name;
   String? imageUrl;
-  int? rating;
+  num? rating;
   int? duration;
   String? overview;
   String? genres;
