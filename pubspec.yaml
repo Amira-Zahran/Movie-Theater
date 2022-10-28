@@ -55,6 +55,7 @@ dependencies:
   swipe_deck: ^1.1.0
   curved_carousel: ^0.0.7
   carousel_slider: ^4.1.1
+  page_indicator: ^0.4.1
   onboarding_screen: ^0.0.3
   flutter_rating_bar: ^4.0.1
   date_picker_timeline: ^1.2.3

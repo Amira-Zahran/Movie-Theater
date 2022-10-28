@@ -6,17 +6,17 @@ import '../../../model/home/movies_find_model.dart';
 import '../../components/core/style.dart';
 
 
-class Details extends StatefulWidget {
-  const Details({Key? key, required this.moviesFindModel, required this.index}) : super(key: key);
+class MovieDetails extends StatefulWidget {
+  const MovieDetails({Key? key, required this.moviesFindModel, required this.index}) : super(key: key);
 
   final List<MoviesFindModel> moviesFindModel;
   final int index;
 
   @override
-  State<Details> createState() => _DetailsState();
+  State<MovieDetails> createState() => _MovieDetailsState();
 }
 
-class _DetailsState extends State<Details> {
+class _MovieDetailsState extends State<MovieDetails> {
 
   DateTime _selectedValue = DateTime.now();
   DatePickerController _controller = DatePickerController();
@@ -184,13 +184,11 @@ class _DetailsState extends State<Details> {
                       print('kk');
                     },
                     )),
-                Expanded(
-                  child: Align(
-                    alignment: FractionalOffset.bottomCenter,
-                    child: MaterialButton(
-                      onPressed: () => {},
-                      child: const Text('Reservation'),
-                    ),
+                Align(
+                  alignment: FractionalOffset.bottomCenter,
+                  child: MaterialButton(
+                    onPressed: () => {},
+                    child: const Text('Reservation'),
                   ),
                 ),
               ],

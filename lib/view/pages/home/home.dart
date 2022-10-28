@@ -8,7 +8,7 @@ import 'package:odc_interview/model/home/movies_find_model.dart';
 import 'package:odc_interview/view/components/core/style.dart';
 import 'package:odc_interview/view_model/bloc/home/home_cubit.dart';
 import 'package:odc_interview/view_model/bloc/states.dart';
-import 'package:swipe_deck/swipe_deck.dart';
+import 'package:page_indicator/page_indicator.dart';
 
 
 
@@ -64,42 +64,76 @@ class _HomeState extends State<Home> {
                             SizedBox(
                              width: double.infinity,
                              height: MediaQuery.of(context).size.height*.6,
-                             child: PageView.builder(
-                              physics: const ClampingScrollPhysics(),
-                              controller: _pageController,
-                              itemCount: myHome.moviesFind.length,
-                              itemBuilder: (BuildContext context, int index) {
-                                return Container(
-                                  padding: const EdgeInsets.only(top: 30, left: 20),
-                                  //width: double.infinity,
-                                  height: MediaQuery.of(context).size.height,
-                                  //alignment: Alignment.center,
-                                  decoration: BoxDecoration(
-                                    image: DecorationImage(
-                                      image: NetworkImage(myHome.moviesFind[index].imageUrl.toString()),
-                                      fit: BoxFit.cover,
-                                      colorFilter: ColorFilter.mode(
-                                          Colors.black.withOpacity(0.8), BlendMode.darken),),),
-                                  child: Column(
-                                    children: const [
-                                      Center(child: Text('Now Playing', style: TextStyle(
-                                          fontSize: 35,
-                                          fontWeight: FontWeight.bold,
-                                          fontFamily: 'Salsa',
-                                          color: Colors.white),)),
-                                      SizedBox(height: 5,),
-                                      Center(child: Text('Book your ticket now', style: TextStyle(
-                                          fontSize: 13,
-                                          fontWeight: FontWeight.bold,
-                                          fontFamily: 'Salsa',
-                                          color: primary),)),
-                                      //SizedBox(height: MediaQuery.of(context).size.height*.09,),
-                                    ],
-                                  ),
-                                );
+                             child: PageIndicatorContainer (
+                                 align: IndicatorAlign.bottom,
+                                 length: 4,
+                                 indicatorSpace: 20.0,
+                                 padding: const EdgeInsets.all(10),
+                                 indicatorColor: grey,
+                                 indicatorSelectorColor: primary,
+                                 shape: IndicatorShape.circle(size: 12),
+                                 // shape: IndicatorShape.roundRectangleShape(size: Size.square(12),cornerSize: Size.square(3)),
+                                 // shape: IndicatorShape.oval(size: Size(12, 8)),
+
+                                 child: PageView.builder(
+                                   physics: const ClampingScrollPhysics(),
+                                   controller: _pageController,
+                                   itemCount: myHome.moviesFind.length,
+                                   itemBuilder: (BuildContext context, int index) {
+                                     return Container(
+                                       padding: const EdgeInsets.only(top: 30, left: 20),
+                                       //width: double.infinity,
+                                       height: MediaQuery.of(context).size.height,
+                                       //alignment: Alignment.center,
+                                       decoration: BoxDecoration(
+                                         image: DecorationImage(
+                                           image: NetworkImage(myHome.moviesFind[index].imageUrl.toString()),
+                                           fit: BoxFit.cover,
+                                           colorFilter: ColorFilter.mode(
+                                               Colors.black.withOpacity(0.8), BlendMode.darken),),),
+                                       child: Column(
+                                         children: const [
+                                           Center(child: Text('Now Playing', style: TextStyle(
+                                               fontSize: 35,
+                                              fontWeight: FontWeight.bold,
+                                              fontFamily: 'Salsa',
+                                              color: Colors.white),)),
+                                          SizedBox(height: 5,),
+                                          Center(child: Text('Book your ticket now', style: TextStyle(
+                                              fontSize: 13,
+                                              fontWeight: FontWeight.bold,
+                                              fontFamily: 'Salsa',
+                                              color: primary),)),
+                                          //SizedBox(height: MediaQuery.of(context).size.height*.09,),
+                                        ],
+                                      ),
+                                    );
                                 },
-                    )
-                    ),
+                                 )
+                             )),
+                            SizedBox(
+                                height: 200,
+                                child: CurvedCarousel(
+                                  viewPortSize: 60,
+                                  reverseAutomaticMovement: false,
+                                  scaleMiddleItem: false,
+                                  automaticMoveDelay: 2,
+                                  animationDuration: 5,
+                                  disableInfiniteScrolling: false,
+                                  tiltItemWithcurve: false,
+                                  //horizontalPadding: 50,
+                                  curveScale: -7,
+                                  itemBuilder: (context, i){
+                                    return Container(
+                                        decoration: BoxDecoration(borderRadius: BorderRadius.circular(30),),
+                                        clipBehavior: Clip.antiAliasWithSaveLayer,
+                                        child: Image.network(myHome.moviesFind[i].imageUrl.toString(),));
+
+                                  },
+                                  itemCount: myHome.moviesFind.length,
+                                ),
+                              ),
+
 /*
                             InkWell(
                               onTap: (){
@@ -142,28 +176,6 @@ class _HomeState extends State<Home> {
                               ),
                             ),
 */
-                            SizedBox(
-                              height: 200,
-                              child: CurvedCarousel(
-                                viewPortSize: 60,
-                                reverseAutomaticMovement: false,
-                                scaleMiddleItem: false,
-                                automaticMoveDelay: 2,
-                                animationDuration: 5,
-                                disableInfiniteScrolling: false,
-                                tiltItemWithcurve: false,
-                                //horizontalPadding: 50,
-                                curveScale: -7,
-                                itemBuilder: (context, i){
-                                  return Container(
-                                      decoration: BoxDecoration(borderRadius: BorderRadius.circular(30),),
-                                      clipBehavior: Clip.antiAliasWithSaveLayer,
-                                      child: Image.network(myHome.moviesFind[i].imageUrl.toString(),));
-
-                                },
-                                itemCount: myHome.moviesFind.length,
-                              ),
-                            ),
 /*
                             AnimatedPositioned(
                               duration: Duration(milliseconds: 600),
@@ -190,7 +202,6 @@ class _HomeState extends State<Home> {
                               ),
                             ),
 */
-
                           ],
                         ),
 
