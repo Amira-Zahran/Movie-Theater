@@ -22,7 +22,7 @@ class Login extends StatelessWidget {
       child: BlocConsumer<LoginCubit, CubitState>(
         listener: (BuildContext context, state) {
           if(state is LoginSuccessState /*|| state is GoogleAuthSucessState || state is FacebookAuthSucessState*/){
-            navigateTo(context, Home());
+            navigateTo(context, const Home());
             /*showTopSnackBar(
               context,
               const CustomSnackBar.success(
@@ -47,7 +47,7 @@ class Login extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           const SizedBox(height: 35,),
-                          Center(child: Image.asset('assets/img/logo.png', width: MediaQuery.of(context).size.width*.4, height: 90,)),
+                          Center(child: logo(context)),
                           const SizedBox(height: 35,),
                           const Center(child: Text('Login', style: TextStyle(fontSize: 35, color: Colors.white, fontFamily: 'Salsa'),)),
                           const SizedBox(height: 35,),
@@ -57,22 +57,12 @@ class Login extends StatelessWidget {
                           textBtn(text: 'Forget password?', onPressed: (){}, fontSize: 12, height: 1),
                           const SizedBox(height: 50,),
                           Center(
-                            child: ElevatedButton(onPressed: (){
+                            child: btn((){
                               myLogin.login();
                               if(_formKey.currentState!.validate()){
                                 return;
                               }
-                            },
-                              style: ElevatedButton.styleFrom(
-                                  backgroundColor: primary,
-                                  fixedSize: Size(MediaQuery.of(context).size.width*.75, 55),
-                                  shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(12))), child: const Text('Login', style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 17.0,
-                                fontWeight: FontWeight.bold,
-                              ),),
-                            ),
+                            }, Size(MediaQuery.of(context).size.width*.75, 55), 'Login')
                           ),
                           const SizedBox(height: 35,),
                           dontHaveAccount(),

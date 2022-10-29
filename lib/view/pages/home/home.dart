@@ -10,6 +10,9 @@ import 'package:odc_interview/view_model/bloc/home/home_cubit.dart';
 import 'package:odc_interview/view_model/bloc/states.dart';
 import 'package:page_indicator/page_indicator.dart';
 
+import '../../components/core/components.dart';
+import 'movie_details.dart';
+
 
 
 
@@ -124,10 +127,15 @@ class _HomeState extends State<Home> {
                                   //horizontalPadding: 50,
                                   curveScale: -7,
                                   itemBuilder: (context, i){
-                                    return Container(
-                                        decoration: BoxDecoration(borderRadius: BorderRadius.circular(30),),
-                                        clipBehavior: Clip.antiAliasWithSaveLayer,
-                                        child: Image.network(myHome.moviesFind[i].imageUrl.toString(),));
+                                    return GestureDetector(
+                                      onTap: (){
+                                        navigateTo(context, MovieDetails(moviesFindModel: myHome.moviesFind, index: i,));
+                                      },
+                                      child: Container(
+                                          decoration: BoxDecoration(borderRadius: BorderRadius.circular(30),),
+                                          clipBehavior: Clip.antiAliasWithSaveLayer,
+                                          child: Image.network(myHome.moviesFind[i].imageUrl.toString(),)),
+                                    );
 
                                   },
                                   itemCount: myHome.moviesFind.length,

@@ -2,8 +2,10 @@ import 'package:date_picker_timeline/date_picker_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_date_picker_timeline/flutter_date_picker_timeline.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:odc_interview/view/components/core/components.dart';
 import '../../../model/home/movies_find_model.dart';
 import '../../components/core/style.dart';
+import 'reservation.dart';
 
 
 class MovieDetails extends StatefulWidget {
@@ -19,7 +21,7 @@ class MovieDetails extends StatefulWidget {
 class _MovieDetailsState extends State<MovieDetails> {
 
   DateTime _selectedValue = DateTime.now();
-  DatePickerController _controller = DatePickerController();
+  final DatePickerController _controller = DatePickerController();
 
   @override
   Widget build(BuildContext context) {
@@ -55,7 +57,7 @@ class _MovieDetailsState extends State<MovieDetails> {
                     const SizedBox(width: 5,),
                     Container(width: 5, height: 5, decoration: BoxDecoration(color: primary, borderRadius: BorderRadius.circular(5)),),
                     const SizedBox(width: 5,),
-                    const Text('2h 28m', style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 12)),
+                    const Text('2h 28m', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 12)),
                     const SizedBox(width: 5,),
                     Container(width: 5, height: 5, decoration: BoxDecoration(color: primary, borderRadius: BorderRadius.circular(5)),),
                     const SizedBox(width: 5,),
@@ -81,7 +83,7 @@ class _MovieDetailsState extends State<MovieDetails> {
                           ),
                         ),
                         onRatingUpdate: (rating) {
-                          print(rating);
+                         // print(rating);
                         },
                       ),
                       Text(widget.moviesFindModel[widget.index].rating.toString(), style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 17)),
@@ -140,27 +142,25 @@ class _MovieDetailsState extends State<MovieDetails> {
                   child: Text('Select Date', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 16)),
                 ),
 
-                Container(
-                  child: DatePicker(
-                    DateTime.now(),
-                    width: 60,
-                    height: 80,
-                    controller: _controller,
-                    initialSelectedDate: DateTime.now(),
-                    selectionColor: primary,
-                    selectedTextColor: Colors.white,
-                    inactiveDates: [
-                      DateTime.now().add(const Duration(days: 3)),
-                      DateTime.now().add(const Duration(days: 4)),
-                      DateTime.now().add(const Duration(days: 7))
-                    ],
-                    onDateChange: (date) {
-                      // New date selected
-                      setState(() {
-                        _selectedValue = date;
-                      });
-                    },
-                  ),
+                DatePicker(
+                  DateTime.now(),
+                  width: 60,
+                  height: 80,
+                  controller: _controller,
+                  initialSelectedDate: DateTime.now(),
+                  selectionColor: primary,
+                  selectedTextColor: Colors.white,
+                  inactiveDates: [
+                    DateTime.now().add(const Duration(days: 3)),
+                    DateTime.now().add(const Duration(days: 4)),
+                    DateTime.now().add(const Duration(days: 7))
+                  ],
+                  onDateChange: (date) {
+                    // New date selected
+                    setState(() {
+                      _selectedValue = date;
+                    });
+                  },
                 ),
                 DatePicker(
                   DateTime.now(),
@@ -181,13 +181,15 @@ class _MovieDetailsState extends State<MovieDetails> {
                       startDate: DateTime(2020, 07, 01),
                       endDate: DateTime(2020, 12, 30),
                       initialSelectedDate: DateTime(2020, 07, 24), onSelectedDateChange: (DateTime? date) {
-                      print('kk');
+                      //print('kk');
                     },
                     )),
                 Align(
                   alignment: FractionalOffset.bottomCenter,
                   child: MaterialButton(
-                    onPressed: () => {},
+                    onPressed: () {
+                      navigateTo(context, Reservation());
+                    },
                     child: const Text('Reservation'),
                   ),
                 ),

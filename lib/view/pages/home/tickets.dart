@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:odc_interview/view/components/core/components.dart';
-import 'package:odc_interview/view/components/home/home.dart';
+import 'package:odc_interview/view/components/home/home_component.dart';
 import '../../components/core/style.dart';
 import 'ticket_details.dart';
 
@@ -125,20 +125,9 @@ class Tickets extends StatelessWidget {
                           ),
                           const SizedBox(height: 10,),
                           Center(
-                            child: ElevatedButton(onPressed: (){
+                            child: btn((){
                               navigateTo(context, const TicketDetails());
-                            },
-                              style: ElevatedButton.styleFrom(
-                                  backgroundColor: primary,
-                                  fixedSize: Size(MediaQuery.of(context).size.width*.4, 20),
-                                  shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(12))),
-                              child: const Text('View Ticket', style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 17.0,
-                                fontWeight: FontWeight.bold,
-                              ),),
-                            ),
+                            }, Size(MediaQuery.of(context).size.width*.4, 20), 'View Ticket')
                           ),
                         ],
                       )

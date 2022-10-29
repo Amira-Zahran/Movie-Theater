@@ -31,8 +31,6 @@ class HomeCubit extends Cubit<CubitState>{
     emit(NavLoading());
     currentIndex = index;
     emit(NavigationSuccessState());
-    emit(NavigationSuccessState());
-    emit(NavigationSuccessState());
   }
 
   final screens = [
