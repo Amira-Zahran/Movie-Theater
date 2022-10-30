@@ -4,6 +4,9 @@ import 'package:curved_carousel/curved_carousel.dart';
 import 'package:flutter/material.dart';
 import 'package:odc_interview/view/components/core/style.dart';
 import 'package:odc_interview/view/components/home/home_component.dart';
+import 'package:odc_interview/view/pages/home/check_right.dart';
+
+import '../../components/core/components.dart';
 
 class Reservation extends StatelessWidget {
   Reservation({Key? key}) : super(key: key);
@@ -97,6 +100,7 @@ class Reservation extends StatelessWidget {
             ),*/
 
             Image.asset('assets/img/curvedline.png'),
+
             /*SizedBox(
               width: 300,
               height: 300,
@@ -109,7 +113,15 @@ class Reservation extends StatelessWidget {
               ),
             )*/
 
-
+            Align(
+              alignment: FractionalOffset.bottomCenter,
+              child: MaterialButton(
+                onPressed: () {
+                  navigateTo(context, const CheckRightPayment());
+                },
+                child: const Text('Reservation'),
+              ),
+            ),
           ],
         ),
       ),

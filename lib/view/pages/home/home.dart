@@ -69,7 +69,7 @@ class _HomeState extends State<Home> {
                              height: MediaQuery.of(context).size.height*.6,
                              child: PageIndicatorContainer (
                                  align: IndicatorAlign.bottom,
-                                 length: 4,
+                                 length: myHome.moviesFind.length,
                                  indicatorSpace: 20.0,
                                  padding: const EdgeInsets.all(10),
                                  indicatorColor: grey,
@@ -95,52 +95,71 @@ class _HomeState extends State<Home> {
                                            colorFilter: ColorFilter.mode(
                                                Colors.black.withOpacity(0.8), BlendMode.darken),),),
                                        child: Column(
-                                         children: const [
-                                           Center(child: Text('Now Playing', style: TextStyle(
+                                         children: [
+                                           const Center(child: Text('Now Playing', style: TextStyle(
                                                fontSize: 35,
                                               fontWeight: FontWeight.bold,
                                               fontFamily: 'Salsa',
                                               color: Colors.white),)),
-                                          SizedBox(height: 5,),
-                                          Center(child: Text('Book your ticket now', style: TextStyle(
+                                          const SizedBox(height: 5,),
+                                          const Center(child: Text('Book your ticket now', style: TextStyle(
                                               fontSize: 13,
                                               fontWeight: FontWeight.bold,
                                               fontFamily: 'Salsa',
                                               color: primary),)),
-                                          //SizedBox(height: MediaQuery.of(context).size.height*.09,),
+                                           SizedBox(height: MediaQuery.of(context).size.height*.09,),
+                                           Center(
+                                             child: SizedBox(
+                                               height: 220,
+                                               child: CurvedCarousel(
+                                                 horizontalPadding: -MediaQuery.of(context).size.width,
+                                                 //tiltItemWithcurve: true,
+                                                 curveScale: -35,
+                                                 itemBuilder: (_, i) {
+                                                   return GestureDetector(
+                                                       onTap: (){
+                                                         navigateTo(context, MovieDetails(moviesFindModel: myHome.moviesFind, index: i, moviesUpComing: myHome.moviesUpComing,));
+                                                       },
+                                                       child: Container(
+                                                         //margin: EdgeInsets.all(50),
+                                                         decoration: BoxDecoration(borderRadius: BorderRadius.circular(15), ),
+                                                         clipBehavior: Clip.antiAliasWithSaveLayer,
+                                                         //radius: 20,
+                                                         //backgroundColor: Colors.primaries[i % Colors.primaries.length],
+                                                         child: Image.network(myHome.moviesUpComing[i].imageUrl.toString(),),
+                                                       ),
+                                                   );
+                                                 },
+                                                 itemCount: myHome.moviesUpComing.length,
+                                               ),
+                                             ),
+                                           )
                                         ],
                                       ),
                                     );
                                 },
                                  )
                              )),
-                            SizedBox(
+                            /*    SizedBox(
                                 height: 200,
+                                //width: 300,
                                 child: CurvedCarousel(
-                                  viewPortSize: 60,
-                                  reverseAutomaticMovement: false,
-                                  scaleMiddleItem: false,
-                                  automaticMoveDelay: 2,
-                                  animationDuration: 5,
-                                  disableInfiniteScrolling: false,
+
                                   tiltItemWithcurve: false,
-                                  //horizontalPadding: 50,
+                                  horizontalPadding: 250,
                                   curveScale: -7,
                                   itemBuilder: (context, i){
                                     return GestureDetector(
                                       onTap: (){
                                         navigateTo(context, MovieDetails(moviesFindModel: myHome.moviesFind, index: i,));
                                       },
-                                      child: Container(
-                                          decoration: BoxDecoration(borderRadius: BorderRadius.circular(30),),
-                                          clipBehavior: Clip.antiAliasWithSaveLayer,
-                                          child: Image.network(myHome.moviesFind[i].imageUrl.toString(),)),
+                                      child: Image.network(myHome.moviesFind[i].imageUrl.toString(),),
                                     );
-
                                   },
                                   itemCount: myHome.moviesFind.length,
                                 ),
-                              ),
+                              ),*/
+
 
 /*
                             InkWell(
@@ -224,12 +243,17 @@ class _HomeState extends State<Home> {
                                 builder: (context){
                                   return Stack(
                                     children: [
-                                      Container(
-                                        width: MediaQuery.of(context).size.width,
-                                          decoration: BoxDecoration(borderRadius: BorderRadius.circular(30),
-                                          image: DecorationImage(image: NetworkImage(index.imageUrl.toString(), ),fit: BoxFit.fill),
-                                          ),
-                                          clipBehavior: Clip.antiAliasWithSaveLayer,
+                                      GestureDetector(
+                                        onTap: (){
+                                          navigateTo(context, MovieDetails(moviesFindModel: myHome.moviesFind, index: myHome.moviesUpComing.indexOf(index), moviesUpComing: myHome.moviesUpComing,));
+                                        },
+                                        child: Container(
+                                          width: MediaQuery.of(context).size.width,
+                                            decoration: BoxDecoration(borderRadius: BorderRadius.circular(30),
+                                            image: DecorationImage(image: NetworkImage(index.imageUrl.toString(), ),fit: BoxFit.cover),
+                                            ),
+                                            clipBehavior: Clip.antiAliasWithSaveLayer,
+                                        ),
                                       ),
                                       Positioned(
                                           left: 15,
@@ -239,12 +263,21 @@ class _HomeState extends State<Home> {
                                           left: 15,
                                           bottom: 20,
                                           child: Text('April 1 2022', style: TextStyle(color: Colors.white38, fontWeight: FontWeight.bold, fontSize: 17),)),
+                                      Center(
+                                        child: Container(
+                                          height: 40,
+                                          width: 40,
+                                          decoration: BoxDecoration(borderRadius: BorderRadius.circular(20), color: lightDark),
+                                          child: const Icon(Icons.play_arrow_rounded, color: Colors.white,),
+                                        ),
+                                      )
                                   ],
                                   );
                                 }
                             );
                           }).toList(),
                           options: CarouselOptions(
+                            autoPlay: true,
                             aspectRatio: 2.0,
                             enlargeCenterPage: true,
                             height: MediaQuery.of(context).size.height*.3,

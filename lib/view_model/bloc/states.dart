@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:odc_interview/model/home/movie_details.dart';
 import 'package:odc_interview/model/home/movies_find_model.dart';
 
 import '../../model/auth/login_model.dart';
@@ -51,17 +52,12 @@ class MoviesUpComingErrorState extends CubitState {
 
 
 
-class GetSectionsSuccess extends CubitState{}
-class GetLecturesSuccess extends CubitState{}
-class GetFinalsSuccess extends CubitState{}
-class GetMidtermsSuccess extends CubitState{}
-class GetNewsSuccess extends CubitState{}
-
-class GetFAQsSuccess extends CubitState{}
-class GetTermsSuccess extends CubitState{}
-
-
-class GetNoteData extends CubitState{}
-
-class InternetConnectedSuccess extends CubitState{}
-class InternetNotConnected extends CubitState{}
+class MovieDetailsLoadingState extends CubitState{}
+class MovieDetailsSuccessState extends CubitState{
+  final MovieDetails movieDetails ;
+  MovieDetailsSuccessState(this.movieDetails);
+}
+class MovieDetailsErrorState extends CubitState{
+  final Response? error;
+  MovieDetailsErrorState(this.error);
+}

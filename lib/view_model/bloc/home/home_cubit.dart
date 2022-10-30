@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:odc_interview/model/home/movie_details.dart';
 import 'package:odc_interview/model/home/movies_find_model.dart';
 import 'package:odc_interview/model/home/movies_upcoming_model.dart';
 import 'package:odc_interview/view/pages/home/home.dart';
@@ -98,6 +99,36 @@ class HomeCubit extends Cubit<CubitState>{
     });
   }
 
+
+  MovieDetails? movieDetails;
+  List<MovieDetails> m = [];
+  Future getMovieDetails()async{
+    //if (await internetConnection!.isConnected) {
+    emit(MovieDetailsLoadingState());
+    await DioHelper.getData(url: movieDetailsEndPoint, token: PreferenceUtils.getString(SharedKeys.apiToken)).then((value) {
+      if (value.statusCode == 200) {
+        print(accessToken);
+        accessToken = PreferenceUtils.getString(SharedKeys.apiToken);
+        print('$accessToken _______________________');
+        print('Movie Details');
+        movieDetails = MovieDetails.fromJson(value.data);
+        /*for(var mov in value.data) {
+          moviesUpComing.add(MoviesUpComingModel.fromJson(mov));
+        }*/
+        isLoading = false;
+        emit(MovieDetailsSuccessState(movieDetails!));
+        print('Movies Details');
+      }
+      emit(MovieDetailsSuccessState(movieDetails!));
+    }).catchError((error) {
+      print(error.toString());
+      if (error is DioError) {
+        print(error.toString());
+        print('error');
+        emit(MovieDetailsErrorState(error.response?.data['message'][0]));
+      }
+    });
+  }
 
 
 }

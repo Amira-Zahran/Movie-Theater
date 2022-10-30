@@ -16,7 +16,7 @@ class SplashScreen extends StatelessWidget {
         body: Center(
           child: AnimatedSplashScreen(
             backgroundColor: secondary,
-            nextScreen:/* PreferenceUtils.getString(SharedKeys.apiToken).isEmpty ? Login() :*/ const NavBottomBar(),
+            nextScreen: PreferenceUtils.getString(SharedKeys.apiToken).isEmpty ? Login() : const NavBottomBar(),
             duration: 2200,
             splash: SizedBox(
                 //width: MediaQuery.of(context).size.width*.8, height: MediaQuery.of(context).size.height*.9,

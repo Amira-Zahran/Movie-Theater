@@ -4,14 +4,16 @@ import 'package:flutter_date_picker_timeline/flutter_date_picker_timeline.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:odc_interview/view/components/core/components.dart';
 import '../../../model/home/movies_find_model.dart';
+import '../../../model/home/movies_upcoming_model.dart';
 import '../../components/core/style.dart';
 import 'reservation.dart';
 
 
 class MovieDetails extends StatefulWidget {
-  const MovieDetails({Key? key, required this.moviesFindModel, required this.index}) : super(key: key);
+  const MovieDetails({Key? key, required this.moviesFindModel, required this.index, required this.moviesUpComing}) : super(key: key);
 
   final List<MoviesFindModel> moviesFindModel;
+  final List<MoviesUpComingModel> moviesUpComing;
   final int index;
 
   @override
@@ -41,19 +43,19 @@ class _MovieDetailsState extends State<MovieDetails> {
                     Container(
                         width: MediaQuery.of(context).size.width,
                         height: MediaQuery.of(context).size.height*.3,
-                        decoration: BoxDecoration(image: DecorationImage(image: NetworkImage(widget.moviesFindModel[widget.index].imageUrl.toString()), fit: BoxFit.cover)),
+                        decoration: BoxDecoration(image: DecorationImage(image: NetworkImage(widget.moviesFindModel.isEmpty ? widget.moviesUpComing[widget.index].imageUrl.toString() : widget.moviesFindModel[widget.index].imageUrl.toString()), fit: BoxFit.fill)),
                     ),
                     Positioned(
                         bottom: 10,
                         left: 70,
-                        child: Center(child: Text(widget.moviesFindModel[widget.index].name.toString(), style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 17),)))
+                        child: Center(child: Text(widget.moviesFindModel.isEmpty ? widget.moviesUpComing[widget.index].name.toString() : widget.moviesFindModel[widget.index].name.toString(), style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 17),)))
                   ],
                 ),
                 const SizedBox(height: 5,),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text('PG-${widget.moviesFindModel[widget.index].duration.toString()}', style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 12)),
+                    Text('PG-${widget.moviesFindModel.isEmpty ? widget.moviesUpComing[widget.index].duration.toString() : widget.moviesFindModel[widget.index].duration.toString()}', style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 12)),
                     const SizedBox(width: 5,),
                     Container(width: 5, height: 5, decoration: BoxDecoration(color: primary, borderRadius: BorderRadius.circular(5)),),
                     const SizedBox(width: 5,),
@@ -61,7 +63,7 @@ class _MovieDetailsState extends State<MovieDetails> {
                     const SizedBox(width: 5,),
                     Container(width: 5, height: 5, decoration: BoxDecoration(color: primary, borderRadius: BorderRadius.circular(5)),),
                     const SizedBox(width: 5,),
-                    Text(widget.moviesFindModel[widget.index].genres.toString(), style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 12)),
+                    Text(widget.moviesFindModel.isEmpty ? widget.moviesUpComing[widget.index].genre.toString() : widget.moviesFindModel[widget.index].genres.toString(), style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 12)),
                   ],
                 ),
                 Padding(
@@ -86,7 +88,7 @@ class _MovieDetailsState extends State<MovieDetails> {
                          // print(rating);
                         },
                       ),
-                      Text(widget.moviesFindModel[widget.index].rating.toString(), style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 17)),
+                      Text(widget.moviesFindModel.isEmpty ? widget.moviesUpComing[widget.index].rating.toString() : widget.moviesFindModel[widget.index].rating.toString(), style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 17)),
                     ],
                   ),
                 ),
@@ -96,7 +98,7 @@ class _MovieDetailsState extends State<MovieDetails> {
                 ),
                 Center(child: SizedBox(
                     height: MediaQuery.of(context).size.width*.2,
-                    width: MediaQuery.of(context).size.width*.8, child: Text(widget.moviesFindModel[widget.index].overview.toString(), maxLines: 7, style: const TextStyle(color: Colors.white)))),
+                    width: MediaQuery.of(context).size.width*.8, child: Text(widget.moviesFindModel.isEmpty ? widget.moviesUpComing[widget.index].overview.toString() : widget.moviesFindModel[widget.index].overview.toString(), maxLines: 7, style: const TextStyle(color: Colors.white)))),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -174,7 +176,7 @@ class _MovieDetailsState extends State<MovieDetails> {
                     });
                   },
                 ),
-                Container(
+                /*Container(
                     padding: const EdgeInsets.only(top: 11, bottom: 11),
                     decoration: const BoxDecoration(color: Color(0xFFF5F5F5)),
                     child: FlutterDatePickerTimeline(
@@ -183,10 +185,11 @@ class _MovieDetailsState extends State<MovieDetails> {
                       initialSelectedDate: DateTime(2020, 07, 24), onSelectedDateChange: (DateTime? date) {
                       //print('kk');
                     },
-                    )),
+                    )),*/
                 Align(
                   alignment: FractionalOffset.bottomCenter,
                   child: MaterialButton(
+                    color: primary,
                     onPressed: () {
                       navigateTo(context, Reservation());
                     },
