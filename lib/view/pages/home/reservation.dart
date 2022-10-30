@@ -4,8 +4,8 @@ import 'package:curved_carousel/curved_carousel.dart';
 import 'package:flutter/material.dart';
 import 'package:odc_interview/model/home/movies_find_model.dart';
 import 'package:odc_interview/view/components/core/style.dart';
-import 'package:odc_interview/view/components/home/home_component.dart';
 import 'package:odc_interview/view/pages/home/check_right.dart';
+import 'package:odc_interview/view_model/database/network/end_points.dart';
 
 import '../../components/core/components.dart';
 
@@ -167,17 +167,19 @@ class _ReservationState extends State<Reservation> {
             ),
             const SizedBox(height: 40,),
             Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 Row(
                   children: [
-                    const Icon(Icons.event_seat, color: primary,),
-                    customText(widget.moviesFindModel[widget.index].id, 17)
+                    const Icon(Icons.credit_card, color: primary,),
+                    customText(widget.moviesFindModel[widget.index].id.toString(), 17)
                   ],
                 ),
                 circle(primary),
+                customText('${widget.moviesFindModel.length} Seats Selected', 16)
               ],
             ),
-
+            const SizedBox(height: 40,),
             Align(
                 alignment: FractionalOffset.bottomCenter,
                 child: Container(
