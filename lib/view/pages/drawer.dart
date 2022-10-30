@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:odc_interview/view/components/core/components.dart';
+import 'package:odc_interview/view/pages/auth/login.dart';
 import 'package:odc_interview/view/pages/home/nav_bottom_bar.dart';
+import 'package:odc_interview/view_model/bloc/auth/Login_cubit.dart';
+import 'package:odc_interview/view_model/database/local/shared_prefrences/preference_utils.dart';
 
 import '../components/core/style.dart';
 import 'home/search.dart';
@@ -19,7 +22,9 @@ Widget drawer(context) {
               children: [
                 Padding(padding: const EdgeInsets.all(8),
                   child: CircleAvatar(
-                  child: ClipOval(
+                    backgroundColor: primary,
+                    radius: 20,
+                  child: ClipPath(
                     child: Image.network(
                       'https://oflutter.com/wp-content/uploads/2021/02/girl-profile.png',
                       fit: BoxFit.cover,
@@ -30,7 +35,7 @@ Widget drawer(context) {
                 ),
                 ),
                 const SizedBox(width: 20,),
-                const Text('name', style: TextStyle(color: Colors.white),),
+                Text(PreferenceUtils.getString(SharedKeys.userName), style: const TextStyle(color: Colors.white),),
               ],
             ),
             GestureDetector(
@@ -62,7 +67,7 @@ Widget drawer(context) {
             ),
             GestureDetector(
               onTap: (){
-
+                navigateAndFinish(context, Login());
               },
               child: ListTile(
                 leading: Image.asset('assets/img/logout.png', width: 20, height: 20),

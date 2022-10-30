@@ -3,19 +3,6 @@ import 'package:flutter/material.dart';
 
 import '../core/style.dart';
 
-Widget customText(text,double? size){
-  return Text(text, style: TextStyle(color: Colors.white, fontSize: size, fontWeight: FontWeight.bold),);
-}
-
-appBar(text){
-  return AppBar(
-    backgroundColor: secondary,
-    elevation: 0.0,
-    title: Text(text),
-    leading: const BackButton(color: Colors.white,),
-    centerTitle: true,);
-}
-
 /*class CurveClipper extends CustomClipper<Path> {
   @override
   Path getClip(Size size) {

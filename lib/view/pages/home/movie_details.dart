@@ -1,8 +1,8 @@
 import 'package:date_picker_timeline/date_picker_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_date_picker_timeline/flutter_date_picker_timeline.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:odc_interview/view/components/core/components.dart';
+import 'package:odc_interview/view/components/home/home_component.dart';
 import '../../../model/home/movies_find_model.dart';
 import '../../../model/home/movies_upcoming_model.dart';
 import '../../components/core/style.dart';
@@ -10,11 +10,12 @@ import 'reservation.dart';
 
 
 class MovieDetails extends StatefulWidget {
-  const MovieDetails({Key? key, required this.moviesFindModel, required this.index, required this.moviesUpComing}) : super(key: key);
+  const MovieDetails({Key? key, required this.moviesFindModel, required this.moviesUpComing, required this.index}) : super(key: key);
 
   final List<MoviesFindModel> moviesFindModel;
   final List<MoviesUpComingModel> moviesUpComing;
   final int index;
+
 
   @override
   State<MovieDetails> createState() => _MovieDetailsState();
@@ -22,7 +23,7 @@ class MovieDetails extends StatefulWidget {
 
 class _MovieDetailsState extends State<MovieDetails> {
 
-  DateTime _selectedValue = DateTime.now();
+  DateTime selectedValue = DateTime.now();
   final DatePickerController _controller = DatePickerController();
 
   @override
@@ -43,27 +44,35 @@ class _MovieDetailsState extends State<MovieDetails> {
                     Container(
                         width: MediaQuery.of(context).size.width,
                         height: MediaQuery.of(context).size.height*.3,
-                        decoration: BoxDecoration(image: DecorationImage(image: NetworkImage(widget.moviesFindModel.isEmpty ? widget.moviesUpComing[widget.index].imageUrl.toString() : widget.moviesFindModel[widget.index].imageUrl.toString()), fit: BoxFit.fill)),
+                        decoration: BoxDecoration(image: DecorationImage(image: NetworkImage(widget.moviesFindModel[widget.index].imageUrl.toString()), fit: BoxFit.cover)),
                     ),
+                    const BackButton(color: Colors.white,),
                     Positioned(
-                        bottom: 10,
-                        left: 70,
-                        child: Center(child: Text(widget.moviesFindModel.isEmpty ? widget.moviesUpComing[widget.index].name.toString() : widget.moviesFindModel[widget.index].name.toString(), style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 17),)))
+                      top: MediaQuery.of(context).size.height*.12,
+                      left: MediaQuery.of(context).size.height*.22,
+                      child: playIcon(),
+                    ),
+                    Center(
+                      child: Padding(
+                        padding: EdgeInsets.only(top: MediaQuery.of(context).size.height*.266),
+                        child: Text(widget.moviesFindModel[widget.index].name.toString(), style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 17),),
+                      ),
+                    ),
                   ],
                 ),
                 const SizedBox(height: 5,),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text('PG-${widget.moviesFindModel.isEmpty ? widget.moviesUpComing[widget.index].duration.toString() : widget.moviesFindModel[widget.index].duration.toString()}', style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 12)),
+                    Text('PG-${widget.moviesFindModel[widget.index].duration.toString()}', style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 12)),
                     const SizedBox(width: 5,),
-                    Container(width: 5, height: 5, decoration: BoxDecoration(color: primary, borderRadius: BorderRadius.circular(5)),),
+                    circle(primary),
                     const SizedBox(width: 5,),
                     const Text('2h 28m', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 12)),
                     const SizedBox(width: 5,),
-                    Container(width: 5, height: 5, decoration: BoxDecoration(color: primary, borderRadius: BorderRadius.circular(5)),),
+                    circle(primary),
                     const SizedBox(width: 5,),
-                    Text(widget.moviesFindModel.isEmpty ? widget.moviesUpComing[widget.index].genre.toString() : widget.moviesFindModel[widget.index].genres.toString(), style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 12)),
+                    Text(widget.moviesFindModel[widget.index].genres.toString(), style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 12)),
                   ],
                 ),
                 Padding(
@@ -88,38 +97,37 @@ class _MovieDetailsState extends State<MovieDetails> {
                          // print(rating);
                         },
                       ),
-                      Text(widget.moviesFindModel.isEmpty ? widget.moviesUpComing[widget.index].rating.toString() : widget.moviesFindModel[widget.index].rating.toString(), style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 17)),
+                      Text(widget.moviesFindModel[widget.index].rating.toString(), style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 17)),
                     ],
                   ),
                 ),
-                const Padding(
-                  padding: EdgeInsets.all(20.0),
-                  child: Text('Synopsis', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 16)),
+                Padding(
+                  padding: const EdgeInsets.all(20.0),
+                  child: customText('Synopsis', 15)
                 ),
                 Center(child: SizedBox(
                     height: MediaQuery.of(context).size.width*.2,
-                    width: MediaQuery.of(context).size.width*.8, child: Text(widget.moviesFindModel.isEmpty ? widget.moviesUpComing[widget.index].overview.toString() : widget.moviesFindModel[widget.index].overview.toString(), maxLines: 7, style: const TextStyle(color: Colors.white)))),
+                    width: MediaQuery.of(context).size.width*.8, child: Text(widget.moviesFindModel[widget.index].overview.toString(), maxLines: 7, style: const TextStyle(color: Colors.white)))),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    const Padding(
-                      padding: EdgeInsets.all(20.0),
-                      child: Text('Cast & Crew', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 16)),
+                    Padding(
+                      padding: const EdgeInsets.all(20.0),
+                      child: customText('Cast & Crew', 15)
                     ),
                     InkWell(
                       onTap: (){
 
                       },
                       child: Row(
-                        children: const [
-                          Text('See All', style: TextStyle(color: Colors.white, fontSize: 15)),
-                          Icon(Icons.fast_forward_outlined, color: primary,)
+                        children: [
+                          customText('See All', 15),
+                          const Icon(Icons.fast_forward_outlined, color: primary,)
                         ],
                       ),
                     ),
                   ],
                 ),
-/*
                 Expanded(
                   flex: 1,
                   child: ListView.builder(
@@ -128,8 +136,9 @@ class _MovieDetailsState extends State<MovieDetails> {
                         return Column(
                           children: [
                             Container(
+                              padding: const EdgeInsets.only(bottom: 3),
                               width: MediaQuery.of(context).size.width*.3,
-                              height: MediaQuery.of(context).size.height*.08,
+                              height: MediaQuery.of(context).size.height*.09,
                               decoration: BoxDecoration(borderRadius: BorderRadius.circular(20)),
                               child: Image.asset('assets/img/mask.png'),),
                             //SizedBox(height: 10,),
@@ -138,32 +147,35 @@ class _MovieDetailsState extends State<MovieDetails> {
                         );
                       }),
                 ),
-*/
-                const Padding(
-                  padding: EdgeInsets.all(20.0),
-                  child: Text('Select Date', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 16)),
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 10.0, left: 20),
+                  child: customText('Select Date', 15)
                 ),
 
                 DatePicker(
                   DateTime.now(),
-                  width: 60,
+                  width: 70,
                   height: 80,
                   controller: _controller,
                   initialSelectedDate: DateTime.now(),
                   selectionColor: primary,
                   selectedTextColor: Colors.white,
+                  monthTextStyle: const TextStyle(color: Colors.white),
+                  dateTextStyle: const TextStyle(color: Colors.white),
+                  dayTextStyle: const TextStyle(color: Colors.white),
+                  daysCount: 9,
+                  deactivatedColor: darkGrey,
                   inactiveDates: [
-                    DateTime.now().add(const Duration(days: 3)),
-                    DateTime.now().add(const Duration(days: 4)),
-                    DateTime.now().add(const Duration(days: 7))
+                    DateTime.now().add(const Duration(days: 0,)),
                   ],
                   onDateChange: (date) {
                     // New date selected
                     setState(() {
-                      _selectedValue = date;
+                      selectedValue = date;
                     });
                   },
                 ),
+/*
                 DatePicker(
                   DateTime.now(),
                   initialSelectedDate: DateTime.now(),
@@ -176,7 +188,9 @@ class _MovieDetailsState extends State<MovieDetails> {
                     });
                   },
                 ),
-                /*Container(
+*/
+/*
+                Container(
                     padding: const EdgeInsets.only(top: 11, bottom: 11),
                     decoration: const BoxDecoration(color: Color(0xFFF5F5F5)),
                     child: FlutterDatePickerTimeline(
@@ -185,16 +199,25 @@ class _MovieDetailsState extends State<MovieDetails> {
                       initialSelectedDate: DateTime(2020, 07, 24), onSelectedDateChange: (DateTime? date) {
                       //print('kk');
                     },
-                    )),*/
-                Align(
-                  alignment: FractionalOffset.bottomCenter,
-                  child: MaterialButton(
-                    color: primary,
-                    onPressed: () {
-                      navigateTo(context, Reservation());
-                    },
-                    child: const Text('Reservation'),
-                  ),
+                    )),
+*/
+                Padding(
+                  padding: const EdgeInsets.only(top: 10),
+                  child: Align(
+                    alignment: FractionalOffset.bottomCenter,
+                    child: Container(
+                      decoration: const BoxDecoration(borderRadius: BorderRadius.only(topLeft: Radius.circular(15), topRight: Radius.circular(15),)),
+                      clipBehavior: Clip.antiAliasWithSaveLayer,
+                      width: MediaQuery.of(context).size.width,
+                      child: MaterialButton(
+                      height: 60,
+                      color: primary,
+                      onPressed: () {
+                        navigateTo(context, Reservation(moviesFindModel: widget.moviesFindModel, index: widget.index,));
+                      },
+                      child: Center(child: customText('Reservation', 16)),
+                    ),
+                  )),
                 ),
               ],
             ),

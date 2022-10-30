@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:odc_interview/model/home/create_ticket_model.dart';
 import 'package:odc_interview/model/home/movie_details.dart';
 import 'package:odc_interview/model/home/movies_find_model.dart';
 
@@ -60,4 +61,15 @@ class MovieDetailsSuccessState extends CubitState{
 class MovieDetailsErrorState extends CubitState{
   final Response? error;
   MovieDetailsErrorState(this.error);
+}
+
+
+class TicketLoadingState extends CubitState{}
+class TicketSuccessState extends CubitState{
+  final CreateTicketModel createTicketModel ;
+  TicketSuccessState(this.createTicketModel);
+}
+class TicketErrorState extends CubitState{
+  final Response? error;
+  TicketErrorState(this.error);
 }

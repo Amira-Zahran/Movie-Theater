@@ -31,9 +31,12 @@ class LoginCubit extends Cubit<CubitState>{
     await DioHelper.postData(url: loginEndPoint, data: json).then((value) {
       if(value.statusCode == 200) {
         loginModel = LoginModel.fromJson(value.data);
+
         //accessToken = loginModel!.data!.accessToken.toString();
         accessToken = value.data['accessToken'];
         PreferenceUtils.setString(SharedKeys.apiToken, accessToken);
+        userName = value.data['user']['name'];
+        PreferenceUtils.setString(SharedKeys.userName, userName);
         print(accessToken);
         print('------------token');
         emit(LoginSuccessState(loginModel!));

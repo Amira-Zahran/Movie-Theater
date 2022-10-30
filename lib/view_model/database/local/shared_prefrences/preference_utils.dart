@@ -23,7 +23,7 @@ class PreferenceUtils {
 }
 
 enum SharedKeys {
-  firstName,
+  userName,
   apiToken,
   userId,
   userImageUrl,

@@ -11,6 +11,7 @@ import 'package:odc_interview/view_model/bloc/states.dart';
 import 'package:page_indicator/page_indicator.dart';
 
 import '../../components/core/components.dart';
+import '../../components/home/home_component.dart';
 import 'movie_details.dart';
 
 
@@ -116,21 +117,22 @@ class _HomeState extends State<Home> {
                                                  //tiltItemWithcurve: true,
                                                  curveScale: -35,
                                                  itemBuilder: (_, i) {
-                                                   return GestureDetector(
-                                                       onTap: (){
-                                                         navigateTo(context, MovieDetails(moviesFindModel: myHome.moviesFind, index: i, moviesUpComing: myHome.moviesUpComing,));
-                                                       },
-                                                       child: Container(
-                                                         //margin: EdgeInsets.all(50),
-                                                         decoration: BoxDecoration(borderRadius: BorderRadius.circular(15), ),
-                                                         clipBehavior: Clip.antiAliasWithSaveLayer,
-                                                         //radius: 20,
-                                                         //backgroundColor: Colors.primaries[i % Colors.primaries.length],
-                                                         child: Image.network(myHome.moviesUpComing[i].imageUrl.toString(),),
-                                                       ),
+                                                   return/* myHome.moviesFind.isEmpty ? const CircularProgressIndicator(color: primary,)
+                                                       : */GestureDetector(
+                                                           onTap: (){
+                                                             navigateTo(context, MovieDetails(moviesFindModel: myHome.moviesFind, moviesUpComing: myHome.moviesUpComing, index: i,));
+                                                           },
+                                                           child: Container(
+                                                             //margin: EdgeInsets.all(50),
+                                                             decoration: BoxDecoration(borderRadius: BorderRadius.circular(15), ),
+                                                             clipBehavior: Clip.antiAliasWithSaveLayer,
+                                                             //radius: 20,
+                                                             //backgroundColor: Colors.primaries[i % Colors.primaries.length],
+                                                             child: Image.network(myHome.moviesFind[i].imageUrl.toString(),),
+                                                     ),
                                                    );
                                                  },
-                                                 itemCount: myHome.moviesUpComing.length,
+                                                 itemCount: myHome.moviesFind.length,
                                                ),
                                              ),
                                            )
@@ -243,18 +245,13 @@ class _HomeState extends State<Home> {
                                 builder: (context){
                                   return Stack(
                                     children: [
-                                      GestureDetector(
-                                        onTap: (){
-                                          navigateTo(context, MovieDetails(moviesFindModel: myHome.moviesFind, index: myHome.moviesUpComing.indexOf(index), moviesUpComing: myHome.moviesUpComing,));
-                                        },
-                                        child: Container(
+                                      Container(
                                           width: MediaQuery.of(context).size.width,
                                             decoration: BoxDecoration(borderRadius: BorderRadius.circular(30),
                                             image: DecorationImage(image: NetworkImage(index.imageUrl.toString(), ),fit: BoxFit.cover),
                                             ),
                                             clipBehavior: Clip.antiAliasWithSaveLayer,
                                         ),
-                                      ),
                                       Positioned(
                                           left: 15,
                                           bottom: 45,
@@ -264,12 +261,7 @@ class _HomeState extends State<Home> {
                                           bottom: 20,
                                           child: Text('April 1 2022', style: TextStyle(color: Colors.white38, fontWeight: FontWeight.bold, fontSize: 17),)),
                                       Center(
-                                        child: Container(
-                                          height: 40,
-                                          width: 40,
-                                          decoration: BoxDecoration(borderRadius: BorderRadius.circular(20), color: lightDark),
-                                          child: const Icon(Icons.play_arrow_rounded, color: Colors.white,),
-                                        ),
+                                        child: playIcon(),
                                       )
                                   ],
                                   );
@@ -292,7 +284,7 @@ class _HomeState extends State<Home> {
     );
   }
 
-  Widget carouselView(int index, List<MoviesFindModel>? moviesFind) {
+/*  Widget carouselView(int index, List<MoviesFindModel>? moviesFind) {
     return AnimatedBuilder(
       animation: _pageController,
       builder: (context, child) {
@@ -314,6 +306,6 @@ class _HomeState extends State<Home> {
         decoration: BoxDecoration(borderRadius: BorderRadius.circular(30),),
         clipBehavior: Clip.antiAliasWithSaveLayer,
         child: Image.network(moviesFind![index].imageUrl.toString(),));
-  }
+  }*/
 
 }

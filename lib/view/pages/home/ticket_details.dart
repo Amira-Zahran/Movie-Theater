@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:odc_interview/view/components/core/style.dart';
 import 'package:ticket_widget/ticket_widget.dart';
 
-import '../../components/home/home_component.dart';
+import '../../components/core/components.dart';
 
 class TicketDetails extends StatelessWidget {
   const TicketDetails({Key? key}) : super(key: key);
@@ -18,7 +18,7 @@ class TicketDetails extends StatelessWidget {
           height: 450,
           color: darkGrey,
           isCornerRounded: true,
-          padding: EdgeInsets.all(20),
+          padding: const EdgeInsets.all(20),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [

@@ -10,6 +10,9 @@ const registerEndPoint = 'auth/register';
 // End Points for Main Screen
 const moviesFindEndPoint = 'movies';
 const moviesUpComingEndPoint = 'movies/upcoming';
+
+// End Points for Tickets
+const createTicketsEndPoint = 'tickets';
 const movieDetailsEndPoint = 'reserved-seats/movieData/:id?filter=';
 
 

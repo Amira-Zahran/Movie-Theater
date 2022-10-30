@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:odc_interview/model/home/create_ticket_model.dart';
 import 'package:odc_interview/model/home/movie_details.dart';
 import 'package:odc_interview/model/home/movies_find_model.dart';
 import 'package:odc_interview/model/home/movies_upcoming_model.dart';
@@ -101,7 +102,7 @@ class HomeCubit extends Cubit<CubitState>{
 
 
   MovieDetails? movieDetails;
-  List<MovieDetails> m = [];
+  //List<MovieDetails> m = [];
   Future getMovieDetails()async{
     //if (await internetConnection!.isConnected) {
     emit(MovieDetailsLoadingState());
@@ -126,6 +127,40 @@ class HomeCubit extends Cubit<CubitState>{
         print(error.toString());
         print('error');
         emit(MovieDetailsErrorState(error.response?.data['message'][0]));
+      }
+    });
+  }
+
+
+
+  CreateTicketModel? createTicketModel;
+
+  Future createTicket()async{
+    emit(TicketLoadingState());
+    await DioHelper.postData(url: createTicketsEndPoint, token: PreferenceUtils.getString(SharedKeys.apiToken), data: {
+        'seats': [],
+        'movieDateId': int
+    }).then((value) {
+      if (value.statusCode == 200) {
+        print(accessToken);
+        accessToken = PreferenceUtils.getString(SharedKeys.apiToken);
+        print('$accessToken _______________________');
+        print('Tickets');
+        createTicketModel = CreateTicketModel.fromJson(value.data);
+        /*for(var mov in value.data) {
+          moviesUpComing.add(MoviesUpComingModel.fromJson(mov));
+        }*/
+        isLoading = false;
+        emit(TicketSuccessState(createTicketModel!));
+        print('Tickets Done');
+      }
+      emit(TicketSuccessState(createTicketModel!));
+    }).catchError((error) {
+      print(error.toString());
+      if (error is DioError) {
+        print(error.toString());
+        print('error');
+        emit(TicketErrorState(error.response?.data['message'][0]));
       }
     });
   }
