@@ -46,7 +46,6 @@ dependencies:
   awesome_dialog: ^3.0.1
   dio: ^4.0.6
   shared_preferences: ^2.0.15
-  flutter_svg: ^1.1.5
   internet_connection_checker: ^0.0.1+4
   sqflite: ^2.1.0
   share_plus: ^4.4.0
@@ -64,6 +63,7 @@ dependencies:
   ticket_widget: ^0.0.1
   arrow_path: ^3.0.0
   webview_flutter: ^3.0.4
+  qr_flutter: ^4.0.0
 
 dev_dependencies:
   flutter_test:

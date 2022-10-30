@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:odc_interview/view/components/core/style.dart';
+import 'package:qr_flutter/qr_flutter.dart';
 import 'package:ticket_widget/ticket_widget.dart';
 
 import '../../components/core/components.dart';
+import '../qr_code/Qr_Code.dart';
 
 class TicketDetails extends StatelessWidget {
   const TicketDetails({Key? key}) : super(key: key);
@@ -52,15 +54,12 @@ class TicketDetails extends StatelessWidget {
                   ],
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.only(top: 50.0, left: 90.0, right: 90.0),
-                child: Container(
-                  width: 83.0,
-                  height: 83.0,
-                  decoration: const BoxDecoration(
-                      image: DecorationImage(
-                          image: AssetImage('assets/img/qrcode.png'),
-                          fit: BoxFit.cover)),
+              const Padding(
+                padding: EdgeInsets.only(top: 50.0, left: 90.0, right: 90.0),
+                child:  QRCode(
+                  qrSize: 83,
+                  qrData: 'https://flutterflow.io',
+                  qrForegroundColor: primary,
                 ),
               ),
 
