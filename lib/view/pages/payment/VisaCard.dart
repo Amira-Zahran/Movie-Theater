@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:odc_interview/view/components/core/components.dart';
 import 'package:odc_interview/view/components/core/style.dart';
+import 'package:webview_flutter/webview_flutter.dart';
 
+import '../../components/constants_payment/constants.dart';
 import 'Rejester/rejester.dart';
 
 
 
 class VisaCardScreen extends StatelessWidget {
-  VisaCardScreen({Key? key}) : super(key: key);
+  const VisaCardScreen({Key? key}) : super(key: key);
   
   @override
   Widget build(BuildContext context) {
@@ -17,8 +19,8 @@ class VisaCardScreen extends StatelessWidget {
           onTap: () {
             Exit(context);
           },
-          child: Padding(
-            padding: const EdgeInsets.all(12.0),
+          child: const Padding(
+            padding: EdgeInsets.all(12.0),
             child: Icon(Icons.exit_to_app),
           ),
         )
@@ -61,16 +63,16 @@ class VisaCardScreen extends StatelessWidget {
       context: context,
       builder: (_) {
         return AlertDialog(
-          title: Text('Are you sure completed payment?',
+          title: const Text('Are you sure completed payment?',
           style: TextStyle(color: primary, fontSize: 16),),
           actions:[
             TextButton(onPressed: (){
               Navigator.pop(context);
               navigateAndFinish(context, RegisterScreen());
-            }, child: Text('Yes')),
+            }, child: const Text('Yes')),
             TextButton(onPressed: (){
               Navigator.pop(context);
-            }, child: Text('No')),
+            }, child: const Text('No')),
 
           ],
         );
