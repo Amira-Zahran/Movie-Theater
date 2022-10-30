@@ -24,7 +24,7 @@ Widget drawer(context) {
                   child: CircleAvatar(
                     backgroundColor: primary,
                     radius: 20,
-                  child: ClipPath(
+                  child: ClipOval(
                     child: Image.network(
                       'https://oflutter.com/wp-content/uploads/2021/02/girl-profile.png',
                       fit: BoxFit.cover,

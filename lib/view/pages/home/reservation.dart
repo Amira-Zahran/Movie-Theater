@@ -4,16 +4,15 @@ import 'package:curved_carousel/curved_carousel.dart';
 import 'package:flutter/material.dart';
 import 'package:odc_interview/model/home/movies_find_model.dart';
 import 'package:odc_interview/view/components/core/style.dart';
-import 'package:odc_interview/view/pages/home/check_right.dart';
-import 'package:odc_interview/view_model/database/network/end_points.dart';
+import 'package:odc_interview/view/pages/home/check_payment.dart';
 
 import '../../components/core/components.dart';
 
 class Reservation extends StatefulWidget {
-  const Reservation({Key? key, required this.moviesFindModel, required this.index}) : super(key: key);
+  const Reservation({Key? key, required this.movieFind, required this.indx}) : super(key: key);
 
-  final List<MoviesFindModel> moviesFindModel;
-  final int index;
+  final List<MoviesFindModel> movieFind;
+  final int indx;
   @override
   State<Reservation> createState() => _ReservationState();
 }
@@ -26,6 +25,7 @@ class _ReservationState extends State<Reservation> {
   int max = Random().nextInt(100) + 50;
  // Value is >= 50 and < 150.
   bool selected = false;
+  int select = 0;
 
  // List<Random> time = [Random(max - min)];
   @override
@@ -46,7 +46,7 @@ class _ReservationState extends State<Reservation> {
           children: [
             Divider(thickness: 1, endIndent: MediaQuery.of(context).size.width*.5, color: primary,),
             const SizedBox(height: 15,),
-            customText(widget.moviesFindModel[widget.index].name, 20),
+            customText(widget.movieFind[widget.indx].name, 20),
             const SizedBox(height: 20,),
             Stack(
               children: [
@@ -101,6 +101,7 @@ class _ReservationState extends State<Reservation> {
                             return InkWell(
                                 onTap: (){
                                   setState((){
+                                    select == widget.movieFind[widget.indx].id;
                                     selected = !selected;
                                   });
                                 },
@@ -170,13 +171,14 @@ class _ReservationState extends State<Reservation> {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     const Icon(Icons.credit_card, color: primary,),
-                    customText(widget.moviesFindModel[widget.index].id.toString(), 17)
+                    customText(widget.movieFind[widget.indx].id.toString(), 17)
                   ],
                 ),
                 circle(primary),
-                customText('${widget.moviesFindModel.length} Seats Selected', 16)
+                customText('${widget.movieFind.length.toString()} Seats Selected', 16)
               ],
             ),
             const SizedBox(height: 40,),
@@ -190,7 +192,7 @@ class _ReservationState extends State<Reservation> {
                     height: 60,
                     color: primary,
                     onPressed: () {
-                      navigateTo(context, const CheckRightPayment());
+                      navigateTo(context, CheckPayment(movie: widget.movieFind, ind: widget.indx));
                     },
                     child: Center(child: customText('Checkout', 16)),
                   ),

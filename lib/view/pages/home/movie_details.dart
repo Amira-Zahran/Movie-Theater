@@ -213,7 +213,7 @@ class _MovieDetailsState extends State<MovieDetails> {
                       height: 60,
                       color: primary,
                       onPressed: () {
-                        navigateTo(context, Reservation(moviesFindModel: widget.moviesFindModel, index: widget.index));
+                        navigateTo(context, Reservation(movieFind: widget.moviesFindModel, indx: widget.index));
                       },
                       child: Center(child: customText('Reservation', 16)),
                     ),
