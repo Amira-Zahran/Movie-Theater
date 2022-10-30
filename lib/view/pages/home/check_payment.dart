@@ -26,7 +26,7 @@ class _CheckPaymentState extends State<CheckPayment> {
           children: [
             Divider(thickness: 1, endIndent: MediaQuery.of(context).size.width*.2, color: primary,),
             const SizedBox(height: 15,),
-            customText(widget.movie[widget.ind].name, 20),
+            customText(widget.movie[widget.ind].name.toString(), 20),
             const SizedBox(height: 10,),
             customText('Tomorrow | 20 Feb | 9:00pm', 14),
             const SizedBox(height: 15,),
@@ -52,7 +52,7 @@ class _CheckPaymentState extends State<CheckPayment> {
                       //crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         customText('Info', 15),
-                        customText(widget.movie[widget.ind].name, 15)
+                        customText(widget.movie[widget.ind].name.toString(), 15)
                       ],
                     ),
                     Divider(thickness: 1,indent: MediaQuery.of(context).size.width*.1, endIndent: MediaQuery.of(context).size.width*.1, color: secondary,),
