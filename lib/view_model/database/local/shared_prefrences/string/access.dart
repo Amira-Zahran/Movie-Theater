@@ -1,2 +1,0 @@
-String accessToken = '';
-String userName = '';

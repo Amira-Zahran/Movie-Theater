@@ -11,15 +11,15 @@ Widget defaultButton({
     Container(
       width: width,
       height: 50,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(radius), color: background
+      ),
       child: MaterialButton(
         onPressed: function,
         child: Text(
           isUpperCase ? text.toUpperCase() : text,
           style: const TextStyle(color: Colors.white),
         ),
-      ),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(radius), color: background
       ),
     );
 Widget defaultFormField({
