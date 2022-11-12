@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:odc_interview/view/components/core/style.dart';
-import 'package:qr_flutter/qr_flutter.dart';
 import 'package:ticket_widget/ticket_widget.dart';
 
 import '../../components/core/components.dart';
@@ -67,7 +66,6 @@ class TicketDetails extends StatelessWidget {
           ),
         ),
       )
-
 
       /*Center(child: Container(
        // padding: const EdgeInsets.only(left: 20),
@@ -146,12 +144,20 @@ class TicketDetails extends StatelessWidget {
                   ],
                 ),
             ),
-            Center(child: Image.asset('assets/img/qrcode.png', width: 75,))
+            const Padding(
+              padding: EdgeInsets.only(top: 50.0, left: 90.0, right: 90.0),
+              child:  QRCode(
+                qrSize: 83,
+                qrData: 'https://flutterflow.io',
+                qrForegroundColor: primary,
+              ),
+            ),
+           // Center(child: Image.asset('assets/img/qrcode.png', width: 75,))
 
           ],
         ),
-      ),
-      ),*/
+      ),),*/
+
     );
   }
 }

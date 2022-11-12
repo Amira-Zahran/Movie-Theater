@@ -20,7 +20,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 version: 1.0.0+1
 
 environment:
-  sdk: '>=2.18.1 <3.0.0'
+  sdk: ">=2.17.6"
 
 # Dependencies specify other packages that your package needs in order to work.
 # To automatically upgrade your package dependencies to the latest versions
@@ -42,15 +42,9 @@ dependencies:
   flutter_bloc: ^8.1.1
   google_nav_bar: ^5.0.6
   fluentui_icons: ^1.0.0
-  simple_html_css: ^4.0.0
-  awesome_dialog: ^3.0.1
+  ticket_widget: ^0.0.1
   dio: ^4.0.6
   shared_preferences: ^2.0.15
-  internet_connection_checker: ^0.0.1+4
-  sqflite: ^2.1.0
-  share_plus: ^4.4.0
-  clipboard: ^0.1.3
-  fluttertoast: ^8.0.9
   swipe_deck: ^1.1.0
   curved_carousel: ^0.0.7
   carousel_slider: ^4.1.1
@@ -58,12 +52,9 @@ dependencies:
   flutter_rating_bar: ^4.0.1
   lottie: ^1.4.3
   date_picker_timeline: ^1.2.3
-  flutter_date_picker_timeline: ^0.3.3
-  day_night_time_picker: ^1.1.3
-  ticket_widget: ^0.0.1
-  arrow_path: ^3.0.0
-  webview_flutter: ^3.0.4
-  qr_flutter: ^4.0.0
+  webview_flutter:
+  arrow_path: 
+  qr_flutter:
 
 dev_dependencies:
   flutter_test:
