@@ -51,11 +51,9 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (BuildContext context) { return HomeCubit.get(context)..getMoviesFind()..getMoviesUpComing(); },
-      child: BlocConsumer<HomeCubit, CubitState>(
-          listener: (BuildContext context, state) {  },
+      child: BlocBuilder<HomeCubit, CubitState>(
           builder: (BuildContext context, Object? state) {
             HomeCubit myHome = HomeCubit.get(context);
-
             return  Scaffold(
               backgroundColor: secondary,
                 body: SingleChildScrollView(
