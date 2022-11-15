@@ -41,6 +41,7 @@ class _HomeState extends State<Home> {
   }
 
 
+
   PageController controller = PageController();
 
   //List<Widget> IMAGES = ["assets/img/logo.png", "assets/img/home.png", "assets/img/mask.png", "assets/img/mask.png"];
