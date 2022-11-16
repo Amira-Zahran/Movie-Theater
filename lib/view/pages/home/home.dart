@@ -1,17 +1,14 @@
-import 'dart:math';
 
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:curved_carousel/curved_carousel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:odc_interview/model/home/movies_find_model.dart';
 import 'package:odc_interview/view/components/core/style.dart';
 import 'package:odc_interview/view_model/bloc/home/home_cubit.dart';
 import 'package:odc_interview/view_model/bloc/states.dart';
 import 'package:page_indicator/page_indicator.dart';
 
 import '../../components/core/components.dart';
-import '../../components/home/home_component.dart';
 import 'movie_details.dart';
 
 
